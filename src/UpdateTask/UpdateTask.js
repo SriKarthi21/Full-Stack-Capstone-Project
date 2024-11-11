@@ -40,8 +40,6 @@ console.log(response.data)
   const onSubmit=(data)=>{
     console.log(taskId)
     let  updated={...data,taskId:taskId,emailID:updateData.emailID}
-  // let updated={...data,emailID:"srikarthi@gmail.com"}
-    
       console.log("button clicked")
       console.log(updated)
       saveForm(updated);
@@ -51,14 +49,14 @@ console.log(response.data)
   return (
     <div>UpdateTask
          <form onSubmit={handleSubmit(onSubmit)} 
-          style={{ margin:"10%",
+          style={{ margin:"10%",width:"50%",
             overflow: "hidden",justifyContent:"center"
          }}>
     <Grid2 item xs={12} md={6}mb={1}> 
             <TextField width={'100%'}  name='taskName' variant="standard"  
             id="outlined-required"
-            label="Task Name"
-            defaultValue={updateData?.taskName}
+            
+            value={updateData?.taskName}
           
             {...register('taskName',{
                 required:"Task Name is required",
@@ -68,8 +66,8 @@ console.log(response.data)
     </Grid2> 
     <Grid2 item xs={12} md={6} >
       <TextField name='description' variant="standard" 
-      label="Description"
-       defaultValue={updateData?.description}
+
+       value={updateData?.description}
       {...register('description',{
           required:"Description is required"
       })}fullWidth
@@ -79,15 +77,15 @@ console.log(response.data)
 
 <Grid2 container>
 <Grid2 item xs={12} md={6}><TextField  name='startDate' variant='standard'
-label="Start Date"
-  defaultValue={updateData?.startDate}
+
+  value={updateData?.startDate}
  {...register('startDate')}
         fullWidth  />
      </Grid2>
      <br/>
 <Grid2 item xs={12} md={6}><TextField  name='endDate'  variant='standard'
-label="End Date"
-             defaultValue={updateData?.endDate}
+
+             value={updateData?.endDate}
             {...register('endDate')}
        
         fullWidth  />
@@ -97,7 +95,7 @@ label="End Date"
     <label style={{marginLeft:"40px"}}>Priority</label>
         <Select
           labelId="priority"  id="priority" 
-           label="priority" defaultValue={updateData?.priority}
+            value={updateData?.priority}
            {...register('priority')}
         >
           <MenuItem value="low">Low</MenuItem>
@@ -107,10 +105,10 @@ label="End Date"
         
   </Grid2>
 
-        <Grid2 display={'flex'}  >         
+        <Grid2 display={'flex'}justifyContent={"space-between"}  >         
               <Button  variant='contained' type="reset" onClick={() => reset()}>Reset</Button>
               <Button style={{marginLeft:"40px"}} variant='contained' type="submit">Submit</Button>
-              <Link to="/login" >Cancel</Link>
+             <Button variant='contained' ><Link to="/login" style={{color:"white",textDecoration:"none"}}>Cancel</Link></Button> 
           </Grid2>
 
      </form>
