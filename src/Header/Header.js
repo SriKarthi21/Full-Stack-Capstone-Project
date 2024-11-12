@@ -54,14 +54,11 @@ const Button = styled.button`
  
   return (
     <div className='App-header'style={{backgroundColor:"wheat"}}>
-    {/* <H1 style={{backgroundColor:'green'}}> Kanban Board</H1> */}
     
-     <H1 >Kanban Board</H1>
+     <H1 >To Do Tracker</H1>
      
      <ButtonContainer>
-       {/* <img src='./images/Kanban_Images.png' height="60px" width="200px"/> */}
-       {/* <Image src="./images/Kanban_Images.png" /> */}
- 
+     
          <Button onClick={handleLoginClick}>Login</Button>
          <Button onClick={handleSignUpClick}>Sign Up</Button>
        </ButtonContainer>

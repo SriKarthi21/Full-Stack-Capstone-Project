@@ -21,7 +21,6 @@ import { useNavigate } from 'react-router-dom';
 
 function App() {
   const[initialData,setData]=useState();
-  const[loginForm,setLoginForm]=useState({ userEmailID:"john@gmail.com", userPassword:12345 })
   useEffect(()=>{
     async function fetchData(){
       const response=await axios.get("")
@@ -42,12 +41,13 @@ async function getAllData(){
 }
 
 async function handleLogin(data){
-  console.log("login method called")
+  console.log("login method called"+data.userEmailID,data.password)
   try{
-    const loginResponse=await axios.post(`http://localhost:8082/api/v1/login-check`,loginForm)
+    const loginResponse=await axios.post(`http://localhost:8082/api/v1/login-check`,data)
     setToken(loginResponse.data.token)
     let token=loginResponse.data.token;
-    const response=await axios.get(`http://localhost:8084/api/v1/task/email/${loginForm.userEmailID}`,
+    console.log(loginResponse.data.token)
+    const response=await axios.get(`http://localhost:8084/api/v1/task/email/${data.userEmailID}`,
       {headers:{Authorization:`Bearer ${token}`}})
       setData(response.data)
     console.log(response.data)
@@ -82,7 +82,6 @@ async function handleLogin(data){
   <Route path="/login" element={<Login onLogin={handleLogin} />}/>
  <Route path='/signUp' element={<SignUp/>}/> 
   <Route path="/user" element={<Main prop={initialData}  initialToken={initialToken}/>}/>
-  <Route path="/addtask" element={<Addtask/>}/>
   <Route path="/update/:taskId" element={<UpdateTask initialToken={initialToken}/>} />
   <Route path="*" element={<PageNotFound/>}  />
 </Routes>

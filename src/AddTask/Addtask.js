@@ -19,6 +19,7 @@ const Addtask = ({prop,initialToken}) => {
           const response=await Axios.post("http://localhost:8084/api/v1/task/addTask",updated,
     {headers:{Authorization:`Bearer ${initialToken}`}})
 console.log(response.data)
+alert("Added successfully"+response.data.taskName)
         }catch(e){
             console.log(e)
         }

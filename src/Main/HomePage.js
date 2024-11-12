@@ -13,8 +13,7 @@ function HomePage(){
     `;
     return(
         <div style={{height:"500px", marginTop:"20px"}}>
-        <H1>Kanban Board- Project Management Application</H1>
-        <H3> This is a Project Management tool to keep track of the Project works.
+        <H3> This is a Project Management tool to keep track of the Task.
             There are various Categories namely Todos, In Progress and Completed.
             Day to Day activities are keep tracked using task.
             Task contains descriptions, priority, release dates, severity

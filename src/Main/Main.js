@@ -10,16 +10,19 @@ import Addtask from '../AddTask/Addtask';
 
 
 const Main = ({prop,initialToken}) => {
+  console.log(prop)
   return (
     <div>
         <Addtask prop={prop} initialToken={initialToken}/>
         <main draggable className="container mt-4 mb-4">
 
-{ prop!=null || undefined ?
-      prop?.map((data)=>(
+{ prop.length>0 ?(
+   prop.map((data)=>(
       <Task key={data.taskId} data={data}/>
-       )
-    ):<p>No Data Found</p>}
+       ))
+      ):(<p>No Data Available</p>)
+      }
+      
 </main>
 
     </div>
