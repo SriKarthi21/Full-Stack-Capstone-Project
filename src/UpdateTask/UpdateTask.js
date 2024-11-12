@@ -67,7 +67,7 @@ console.log(response.data)
     <Grid2 item xs={12} md={6} >
       <TextField name='description' variant="standard" 
 
-       value={updateData?.description}
+defaultValue={updateData?.description}
       {...register('description',{
           required:"Description is required"
       })}fullWidth
@@ -108,7 +108,7 @@ console.log(response.data)
         <Grid2 display={'flex'}justifyContent={"space-between"}  >         
               <Button  variant='contained' type="reset" onClick={() => reset()}>Reset</Button>
               <Button style={{marginLeft:"40px"}} variant='contained' type="submit">Submit</Button>
-             <Button variant='contained' ><Link to="/login" style={{color:"white",textDecoration:"none"}}>Cancel</Link></Button> 
+             <Button variant='contained' ><Link to="/user" style={{color:"white",textDecoration:"none"}}>Cancel</Link></Button> 
           </Grid2>
 
      </form>

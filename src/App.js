@@ -6,12 +6,15 @@ import "bootstrap/dist/js/bootstrap.bundle.min";
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
-import Home from './Main/Home';
 import Addtask from './AddTask/Addtask';
-import Header from './Header/Header';
 import PageNotFound from'./PageNotFound'
 import Main from './Main/Main'
 import Footer from './Footer/Footer';
+import Login from './Main/Login';
+import SignUp from './Main/SignUp';
+import HomePage from'./Main/HomePage';
+
+import Header from './Header/Header';
 import { set } from 'react-hook-form';
 import UpdateTask from './UpdateTask/UpdateTask';
 import { useNavigate } from 'react-router-dom';
@@ -38,7 +41,7 @@ async function getAllData(){
   .catch(e=>console.log(e))
 }
 
-async function onLogin(){
+async function handleLogin(data){
   console.log("login method called")
   try{
     const loginResponse=await axios.post(`http://localhost:8082/api/v1/login-check`,loginForm)
@@ -72,16 +75,13 @@ async function onLogin(){
     <div >
       <BrowserRouter>
 <Header/>
-<div style={{marginLeft:"40%",justifyItems:"space-between"}}>
-<button onClick={onLogin}>Login</button>
-<br/>
-<button onClick={getAllData}>Get All Data</button>
-</div>
 
 <Routes>
-  <Route path="/" element={<Home onLogin={onLogin} />}/>
-  {/* <Route path="/" element={<Home />} /> */}
-  <Route path="/login" element={<Main prop={initialData}  initialToken={initialToken}/>}/>
+
+ <Route path="/" element={<HomePage/>}/> 
+  <Route path="/login" element={<Login onLogin={handleLogin} />}/>
+ <Route path='/signUp' element={<SignUp/>}/> 
+  <Route path="/user" element={<Main prop={initialData}  initialToken={initialToken}/>}/>
   <Route path="/addtask" element={<Addtask/>}/>
   <Route path="/update/:taskId" element={<UpdateTask initialToken={initialToken}/>} />
   <Route path="*" element={<PageNotFound/>}  />
