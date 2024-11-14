@@ -4,9 +4,9 @@ import { useNavigate } from 'react-router-dom';
 import {useForm} from "react-hook-form";
 import styled from "styled-components";
 import axios from "axios";
-
+import { useSnackbar } from "notistack";
 export default function Login({onLogin}){
-
+  const { enqueueSnackbar } = useSnackbar(); 
   const {register, handleSubmit,reset,formState:{errors}}=useForm();  
   const Title=styled.h3`
   color:gray;
@@ -59,13 +59,22 @@ export default function Login({onLogin}){
   `;
   const navigate = useNavigate();
   const onSubmit=(data)=>{
+    try{
         onLogin(data);
-        alert(`User  ${data.userEmailID} ${data.password}logged in successfully`)
-
-        setTimeout(() => {
-          navigate("/user");
-        }, 500);
-      
+        enqueueSnackbar("Login successfully!", {
+          variant: "success",
+          autoHideDuration: 2000, 
+          anchorOrigin: {
+            vertical: "top",
+            horizontal: "right",
+          }
+        });
+        navigate("/user");
+      }catch(e){
+        console.log(e)
+      }
+       
+       
       reset();
   }
   
@@ -101,16 +110,16 @@ export default function Login({onLogin}){
     )}
 
 <Input type="password"
-    id="password"
+    id="userPassword"
     placeholder="Enter Password" {...register(
-        "password",{
+        "userPassword",{
             required:{
                 value:true,message:'Password Is Required'
             }
         }
     )}/>
-       { errors.password &&(
-        <Error>{errors.password.message}</Error>
+       { errors.userPassword &&(
+        <Error>{errors.userPassword.message}</Error>
     )}
 <ButtonContainer>
 <Button type="submit">Submit</Button>

@@ -1,122 +1,104 @@
 
-import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate, Link } from 'react-router-dom';
-import { useForm } from 'react-hook-form';
-import axios from 'axios';
-import { Button, Grid2, TextField, Typography, Select, MenuItem } from '@mui/material';
+import React, { useEffect } from 'react'
+import {useForm} from "react-hook-form"
+import {   Grid2, TextField, Typography } from '@mui/material'
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+import Axios from 'axios';
+import { useState } from 'react';
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+import Modal from 'react-bootstrap/Modal';
 
-const UpdateTask = ({ initialToken }) => {
-  const { taskId } = useParams();
 
-  const [updateData, setUpdateData] = useState(null);
- 
-  useEffect(() => {
-    const fetchById = async () => {
-      try {
-        const response = await axios.get(`http://localhost:8084/api/v1/task/getTask/${taskId}`, {
-          headers: { Authorization: `Bearer ${initialToken}` },
-        });
 
-        setUpdateData(response.data);
-        console.log(response.data)
-      } catch (error) {
-        console.error('Error while fetching task:', error);
-      }
-    };
+const UpdateTask = ({propMail,onEditTask,setData}) => {
+    const{register,handleSubmit,formState:{errors,isValid},trigger,reset}=useForm();
+    const [show, setShow] = useState(false);
 
-    fetchById();
-  }, [taskId]);
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+  
+    const onSubmit=(data)=>{
+      handleClose(); 
+      let  EditTask={...data,emailID:propMail}
+        console.log("button clicked")
+        onEditTask(EditTask);
+        reset();
+      };
 
-  const { register, handleSubmit, formState: 
-    { errors, isValid }, trigger, reset ,setValue} = useForm({defaultValues:updateData});
-  const onSubmit = async (data) => {
-    try {
-      console.log(updateData.emailID)
-      const updatedTask = { ...data, taskId, emailID:updateData.emailID}; 
-      const response = await axios.put(`http://localhost:8084/api/v1/task/update/${taskId}`, updatedTask, {
-        headers: { Authorization: `Bearer ${initialToken}` },
-      });
-      alert('Task updated successfully:', response.data);
-     
-    } catch (error) {
-      console.error('Error while updating task:', error);
-    }
-    reset(); 
-  };
+    return (
+    <div >
+ <>
+      <Button variant="primary" onClick={handleShow}>
+        Edit Task
+      </Button>
 
-  return ( updateData?
-    <div style={{backgroundColor:"whitesmoke"}}>
-      <Typography variant="h6">Update Task</Typography>
-      <form onSubmit={handleSubmit(onSubmit)} style={{marginLeft:"30%"}}>
-        <Grid2 container spacing={2} display={"block"} alignContent={"center"} width={500} justifyContent={'space-around'} >
-          <Grid2 item xs={12} m={2}>
-            <TextField
-              {...register('taskName', { required: 'Task Name is required' })}
-              fullWidth
-             defaultValue={updateData?.taskName}
-              error={errors.taskName}
-              helperText={errors.taskName?.message}
-            />
- {errors.taskName && <span>Task Name is required</span>}
-          </Grid2>
-          <Grid2 item xs={12} m={2}>
-            <TextField
-              {...register('description', { required: 'Description is required' })}
-              fullWidth
-              label="Description"
-              error={errors.description}
-              helperText={errors.description?.message} 
-              defaultValue={updateData?.description}
-            />
-          </Grid2>
-          <Grid2 item xs={6}m={2}>
-            <TextField
-              {...register('startDate', { required: 'Start Date is required' })}
-              fullWidth
-              label="Start Date"
-              error={errors.startDate}
-              helperText={errors.startDate?.message}
-              defaultValue={updateData?.startDate}
-            />
-          </Grid2>
-          <Grid2 item xs={6}m={2}>
-            <TextField
-              {...register('endDate', { required: 'End Date is required' })}
-              fullWidth
-              label="End Date"
-              error={errors.endDate}
-              helperText={errors.endDate?.message}
-              defaultValue={updateData?.endDate}
-            />
-          </Grid2>
-          <Grid2 item xs={12}m={2}>
-            <Select
-              {...register('priority')}
-              label="Priority"
-              error={errors.priority}
-              helperText={errors.priority?.message} 
-            >
-              <MenuItem value="low">Low</MenuItem>
-              <MenuItem value="medium">Medium</MenuItem>
-              <MenuItem value="high">High</MenuItem>
-            </Select>
-          </Grid2>
-          <Grid2>
-          <Grid2 item xs={12} display="flex" justifyContent="space-around">
-            <Button variant="contained" type="reset" onClick={reset}>
-              Reset
-            </Button>
-            <Button variant="contained" type="submit" disabled={!isValid}>
-              Submit
-            </Button>
-            <Button variant="contained" component={Link} to="/user">
-              Cancel
-            </Button>
-            </Grid2>
-          </Grid2>
-        </Grid2>
-          </form>
-          </div>:<div>Not Found</div>
+      <Modal show={show} onHide={handleClose} >
+        <Modal.Header closeButton>
+          <Modal.Title>Edit Task</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form onSubmit={onSubmit}>
+            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+              <Form.Label>New Task</Form.Label>
+              <Form.Control
+                name='taskName'  {...register('taskName',{
+                  required:"Task Name is required",
+              })}
+                placeholder="Task Name"
+                autoFocus onBlur={(e)=>trigger('taskName')}
+              /> 
+              <p>{errors.taskname?.message}</p>
+              <Form.Control
+              name='description'as="textarea" rows={3}
+              placeholder="description" {...register('description',{
+                required:"Description is required"
+            })}
+              autoFocus onBlur={(e)=>trigger('description')}
+            /><p>{errors.descritption?.message}</p>
+            <Form.Control
+              name='startDate' type="date"
+              placeholder="start Date" {...register('startDate',{
+                required:"Start Date is required"
+            })} 
+            {...register('startDate')}
+              autoFocus onBlur={(e)=>trigger('startDate')}
+            /><p>{errors.startDate?.message}</p>
+            <Form.Control
+              name='endDate' type="date"
+              placeholder="End Date" {...register('endDate',{
+                required:"End Date is required"
+            })} 
+            {...register('endDate')}
+              autoFocus onBlur={(e)=>trigger('endDate')}
+            /><p>{errors.endDate?.message}</p>
+            <Form.Control
+              name='priority'
+              placeholder="Priority " {...register('priority',{
+                required:"Priority is required"
+            })} 
+            {...register('priority')}
+              autoFocus onBlur={(e)=>trigger('priority')}
+            /><p>{errors.priority?.message}</p>
+            </Form.Group>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button  variant='secondary' type="reset" onClick={() => reset()}>
+          Reset
+          </Button>
+          {/* <Button variant="secondary" onClick={handleClose}>Close</Button> */}
+          <Button variant="primary" type='submit' onClick={handleSubmit(onSubmit)}  disabled={!isValid}>
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    </>
+
+    </div>
   )
 }
+
 export default UpdateTask;

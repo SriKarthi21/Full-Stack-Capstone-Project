@@ -20,37 +20,38 @@ import UpdateTask from './UpdateTask/UpdateTask';
 import { useNavigate } from 'react-router-dom';
 
 function App() {
-  const[initialData,setData]=useState();
-  useEffect(()=>{
-    async function fetchData(){
-      const response=await axios.get("")
-      setData(response.data);
-    }
-    fetchData();
-  },[])
+  const[mail,setMail]=useState();
+  // useEffect(()=>{
+  //   async function fetchData(){
+  //     const response=await axios.get("")
+  //     setData(response.data);
+  //   }
+  //   fetchData();
+  // },[])
 
 const[initialToken,setToken]=useState("");
-async function getAllData(){
-  // const config={headers:{Authorization:`Bearer ${initialToken}`}}
-  console.log("getdata method called")
 
-  const response=await axios.get(`http://localhost:8084/api/v1/task/getAllTask`,
-    {headers:{Authorization:`Bearer ${initialToken}`}})
-  .then(response=> setData(response.data))
-  .catch(e=>console.log(e))
-}
+// async function getAllData(){
+  // const config={headers:{Authorization:`Bearer ${initialToken}`}}
+  // console.log("getdata method called")
+
+//   const response=await axios.get(`http://localhost:8084/api/v1/task/getAllTask`,
+//     {headers:{Authorization:`Bearer ${initialToken}`}})
+//   .then(response=> setData(response.data))
+//   .catch(e=>console.log(e))
+// }
 
 async function handleLogin(data){
-  console.log("login method called"+data.userEmailID,data.password)
+  console.log("login method called"+data.userEmailID,data.userPassword)
   try{
+    
     const loginResponse=await axios.post(`http://localhost:8082/api/v1/login-check`,data)
-    setToken(loginResponse.data.token)
-    let token=loginResponse.data.token;
-    console.log(loginResponse.data.token)
-    const response=await axios.get(`http://localhost:8084/api/v1/task/email/${data.userEmailID}`,
-      {headers:{Authorization:`Bearer ${token}`}})
-      setData(response.data)
-    console.log(response.data)
+    localStorage.setItem('token',loginResponse.data.token)
+    setMail(data.userEmailID)
+    console.log(data.userEmailID)
+    // const response=await axios.get(`http://localhost:8084/api/v1/task/email/${data.userEmailID}`,
+    //   {headers:{Authorization:`Bearer ${token}`}})
+    //   setData(response.data)
   }catch(e){
     console.log(e)
   }
@@ -81,8 +82,8 @@ async function handleLogin(data){
  <Route path="/" element={<HomePage/>}/> 
   <Route path="/login" element={<Login onLogin={handleLogin} />}/>
  <Route path='/signUp' element={<SignUp/>}/> 
-  <Route path="/user" element={<Main prop={initialData}  initialToken={initialToken}/>}/>
-  <Route path="/update/:taskId" element={<UpdateTask initialToken={initialToken}/>} />
+  <Route path="/user" element={<Main prop={mail}  />}/>
+  {/* <Route path="/update/:taskId" element={<UpdateTask initialToken={initialToken}/>} /> */}
   <Route path="*" element={<PageNotFound/>}  />
 </Routes>
 <Footer/>
