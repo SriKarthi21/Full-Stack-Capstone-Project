@@ -12,6 +12,10 @@ import { useSnackbar } from "notistack";
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
+import { Grid2 } from '@mui/material';
+import Box from '@mui/material/Box';
+
+
 
 const Main = ({ prop }) => {
   // prop contains taskId taskName startDate endDate priority
@@ -86,13 +90,14 @@ const Main = ({ prop }) => {
   };
 
   const handleDeleteTask = async (taskId) => {
+    console.log(taskId)
     // try {
     //   const confirmed = window.confirm('Are you sure you want to delete this task?');
     //   if (!confirmed) return; // User cancelled
     //   await axios.delete(`http://localhost:8084/api/v1/task/delete/${taskId}`, {
     //     headers: { Authorization: `Bearer ${token}` }
     //   });
-    //   setData(data.filter((task) => task.id !== taskId)); 
+    //   setData(data.filter((task) => task.taskid !== taskId)); 
     //   enqueueSnackbar("Task deleted successfully!", {
     //     variant: "success",
     //     autoHideDuration: 2000,
@@ -108,10 +113,16 @@ const Main = ({ prop }) => {
   };
   return (
     <div>
+       <Grid2 display={'flex'} 
+       justifyContent={'center'} padding={5}
+    // bgcolor={'rgb(26, 118, 173)'} 
+    container alignContent={'center'} minHeight={600} >
       <Addtask prop={prop} onAddTask={handleAddTask} />
 
-      <main draggable className="container mt-4 mb-4">
-      
+      <Box sx={{ width: '100%' }}>
+      <Grid2  container spacing={{ xs: 2, md: 1 }} 
+        columns={{ xs: 3, sm: 8, md: 12 }}  >
+          
         {data === undefined ? (
           <p>Invalid Email and Token</p>
         ) : data === null ? (
@@ -120,13 +131,20 @@ const Main = ({ prop }) => {
           <p>No Data Found</p>
         ) : (
           data.map((data) => (
-            <Task key={data.taskId} data={data}
-             handleUpdate={ handleUpdateTask} 
-             onDelete={handleDeleteTask} />
+            <Grid2  size={{ xs: 3, sm: 4, md: 3 }}>
+              <Task key={data.taskId} data={data}
+                handleUpdate={ handleUpdateTask} 
+                onDelete={handleDeleteTask} />
+          </Grid2>
+            
           ))
         )}
+        </Grid2>
+      </Box>
+      <main draggable className="container mt-4 mb-4">
+      
       </main>
-
+      </Grid2>
     </div>
   )
 }

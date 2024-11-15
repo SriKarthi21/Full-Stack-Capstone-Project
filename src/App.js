@@ -77,7 +77,7 @@ async function handleLogin(data){
       <BrowserRouter>
 <Header/>
 
-<Routes>
+<Routes style={{height:"90%"}}>
 
  <Route path="/" element={<HomePage/>}/> 
   <Route path="/login" element={<Login onLogin={handleLogin} />}/>

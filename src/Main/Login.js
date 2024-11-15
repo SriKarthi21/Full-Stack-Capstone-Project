@@ -5,6 +5,7 @@ import {useForm} from "react-hook-form";
 import styled from "styled-components";
 import axios from "axios";
 import { useSnackbar } from "notistack";
+import { Grid2 } from '@mui/material';
 export default function Login({onLogin}){
   const { enqueueSnackbar } = useSnackbar(); 
   const {register, handleSubmit,reset,formState:{errors}}=useForm();  
@@ -86,7 +87,9 @@ export default function Login({onLogin}){
 
 
   return (
-    <div>
+    <Grid2 display={'flex'} justifyContent={'center'} paddingLeft={5}
+    // bgcolor={'rgb(26, 118, 173)'} 
+    container alignContent={'center'} minHeight={600}>
 <Container>
 <Title>Login Form</Title>
 <form onSubmit={handleSubmit(onSubmit)}>
@@ -132,7 +135,7 @@ export default function Login({onLogin}){
     </form>
 </Container>
    
-    </div>
+    </Grid2>
     
   )
 }

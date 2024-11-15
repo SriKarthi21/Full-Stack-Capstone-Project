@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useSnackbar } from "notistack";
+import { Grid2 } from "@mui/material";
 const Title = styled.h3`
 color:gray;
 font-family: 'Times New Roman';
@@ -95,7 +96,9 @@ function SignUp() {
     }
 
     return (
-        <Container>
+        <Grid2 display={'flex'} justifyContent={'center'} paddingLeft={5}
+    // bgcolor={'rgb(26, 118, 173)'} 
+    container alignContent={'center'} minHeight={600}>       <Container>
             <Title>Registration Form</Title>
             <form onSubmit={handleSubmit(onSubmit)}>
 
@@ -200,7 +203,8 @@ function SignUp() {
                 </ButtonContainer>
             </form>
         </Container>
-
+        </Grid2>
+ 
 
 
     )
