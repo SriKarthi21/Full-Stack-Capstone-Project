@@ -36,7 +36,8 @@ public class SignUpLoginController {
 	public ResponseEntity<?> register(@Valid	@RequestBody User user) throws EmailAlreadyExistsException {
 		//responseEntity = new ResponseEntity(iSignUpLoginService.save(user), HttpStatus.CREATED);
 		try {
-		iSignUpLoginService.sendSimpleMail(user);
+		//iSignUpLoginService.sendSimpleMail(user);
+			System.out.println("Email response is:"+iSignUpLoginService.sendSimpleMail(user));
 		responseEntity=new ResponseEntity(iSignUpLoginService.save(user),HttpStatus.CREATED);
 		}catch (EmailAlreadyExistsException e) {
 			// TODO: handle exception

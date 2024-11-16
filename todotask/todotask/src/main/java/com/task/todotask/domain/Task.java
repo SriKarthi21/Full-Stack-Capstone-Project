@@ -5,10 +5,13 @@ import java.time.LocalDateTime;
 import java.util.Date;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document
 public class Task {
+	@Transient
+	public static final String SEQUENCE_NAME = "users_sequence";
 
 	@Id
 	private int taskId;
@@ -19,7 +22,8 @@ public class Task {
 	private LocalDate endDate;
 	
 	private String priority;
-	
+	private LocalDateTime createdAt;
+	private LocalDateTime deletedAt;
 	
 	public Task() {
 		super();
@@ -71,5 +75,35 @@ public class Task {
 	public void setPriority(String priority) {
 		this.priority = priority;
 	}
-	
+
+	public LocalDateTime getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(LocalDateTime createdAt) {
+		this.createdAt = createdAt;
+	}
+
+	public LocalDateTime getDeletedAt() {
+		return deletedAt;
+	}
+
+	public void setDeletedAt(LocalDateTime deletedAt) {
+		this.deletedAt = deletedAt;
+	}
+
+	public Task(int taskId, String taskName, String description, String emailID, LocalDate startDate, LocalDate endDate, String priority, LocalDateTime createdAt, LocalDateTime deletedAt) {
+		this.taskId = taskId;
+		this.taskName = taskName;
+		this.description = description;
+		this.emailID = emailID;
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.priority = priority;
+		this.createdAt = createdAt;
+		this.deletedAt = deletedAt;
+	}
+
+
+
 }

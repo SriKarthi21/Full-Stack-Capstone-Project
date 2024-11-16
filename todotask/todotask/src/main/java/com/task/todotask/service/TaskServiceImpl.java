@@ -1,10 +1,9 @@
 package com.task.todotask.service;
 
 import java.time.LocalDate;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -53,17 +52,12 @@ public class TaskServiceImpl implements ITaskService {
 	}
 
 	@Override
-//	@Scheduled(cron = "0 28 12 * * ?")
-	@Scheduled()
+	@Scheduled(cron = "0 28 12 * * ?")
+//	@Scheduled()
 	public void findTasksDueTomorrow() {
 		// TODO Auto-generated method stub
 
-		//keep two variable
-		int a,b;
-		//add two two variable
-		a+b;
-		//print the result
-		System.out.println(a+b);
+
 		List<Task> taskList = taskRepository.findAll();
 		LocalDate local = LocalDate.now();
 		for (Task t : taskList) {
@@ -104,4 +98,60 @@ public class TaskServiceImpl implements ITaskService {
 
 		// return null;
 	}
+
+	@Override
+	public List<Task> getTaskByEmailID(String emailID) {
+		return taskRepository.findByEmailID(emailID);
+	}
+
+	@Override
+	public Task updateTask(Task task, int taskId) {
+		try{
+			Task existingTask= taskRepository.findByTaskId(taskId);
+			task.setTaskId(existingTask.getTaskId());
+			return taskRepository.save(task);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@Override
+	public Optional<Task> findById(Integer taskId) {
+		return Optional.ofNullable(taskRepository.findByTaskId(taskId));
+	}
+
+
+
+//	@Override
+//	public Optional<Task> findById(Integer taskId) {
+//		return taskRepository.findByTaskId(taskId);
+////				findByTaskId(taskId);
+//	}
+
+//	
+//	public List<Task> getActiveTasks() {
+//		return taskRepository.findByDeletedAtIsNull();
+//
+//	}
+//
+//	public List<Task> getDeletedTasks() {
+//		return taskRepository.findByDeletedAtIsNotNull();
+//	}
+//
+//	public void deleteTask(Long id) {
+//		Task task = taskRepository.findById(id).orElse(null);
+//		if (task != null) {
+//			task.setDeletedAt(LocalDateTime.now());
+//			taskRepository.save(task);
+//		}
+//	}
+//
+//	public void restoreTask(Long id) {
+//		Task task = taskRepository.findById(id).orElse(null);
+//		if (task != null) {
+//			task.setDeletedAt(null);
+//			taskRepository.save(task);
+//		}
+//	}
+
 }

@@ -10,6 +10,12 @@ import com.task.todotask.domain.Task;
 
 public interface TaskRepository extends MongoRepository<Task, Integer>{
 
+	List<Task> findByEmailID(String emailID);
+
+	Task findByTaskId(Integer taskId);
+
+	List<Task> findByDeletedAtIsNull();
+	List<Task> findByDeletedAtIsNotNull();
 //	@Query("{ 'endDate' : { $gt: ?0, $lt: ?1 } }")
 //	List<Task> findTasksBetweenEndDate(Date d1,Date d2);
 

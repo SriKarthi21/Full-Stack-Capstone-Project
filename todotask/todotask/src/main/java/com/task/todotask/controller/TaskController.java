@@ -7,13 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.task.todotask.domain.Task;
 import com.task.todotask.service.ITaskService;
@@ -23,6 +17,7 @@ import jakarta.servlet.http.HttpServletRequest;
 
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/api/v1")
 public class TaskController {
 
@@ -55,5 +50,18 @@ public class TaskController {
 		iTaskService.findTasksDueTomorrow();
 		 responseEntity=new ResponseEntity(HttpStatus.OK);
 		 return responseEntity;
+	}
+	@GetMapping("/task/getTask/{taskId}")
+	public ResponseEntity<?> getTaskById(@PathVariable Integer taskId){
+		return responseEntity=new ResponseEntity<>(iTaskService.findById(taskId),HttpStatus.OK);
+	}
+	@PutMapping("/task/update/{taskId}")
+	public ResponseEntity<?> updateTask(@RequestBody Task task,@PathVariable int taskId){
+		return responseEntity=new ResponseEntity(iTaskService.updateTask(task,taskId),HttpStatus.OK);
+	}
+	@GetMapping("/task/email/{emailID}")
+	public ResponseEntity<?> getTaskByEmailID(@PathVariable String emailID){
+		System.out.println("getBYemail called");
+		return responseEntity=new ResponseEntity(iTaskService.getTaskByEmailID(emailID),HttpStatus.OK);
 	}
 }
