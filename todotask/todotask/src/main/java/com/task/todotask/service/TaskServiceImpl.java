@@ -33,17 +33,6 @@ public class TaskServiceImpl implements ITaskService {
 		return taskRepository.save(task);
 	}
 
-	@Override
-	public boolean deleteTask(int taskId) {
-		// TODO Auto-generated method stub
-		boolean flag = false;
-		if (taskRepository.findById(taskId).isPresent()) {
-			taskRepository.deleteById(taskId);
-			flag = true;
-		}
-
-		return flag;
-	}
 
 	@Override
 	public List<Task> getAllTask() {
@@ -120,8 +109,22 @@ public class TaskServiceImpl implements ITaskService {
 		return Optional.ofNullable(taskRepository.findByTaskId(taskId));
 	}
 
-
-
+	@Override
+	public boolean deleteTask(int taskId) {
+		boolean flag = false;
+		if (taskRepository.findById(taskId).isPresent()) {
+			taskRepository.deleteById(taskId);
+			flag = true;
+		}
+		return flag;
+	}
+//	public void deleteTask(Long id) {
+//		Task task = taskRepository.findById(taskId).orElse(null);
+//		if (task != null) {
+//			task.setDeletedAt(LocalDateTime.now());
+//			taskRepository.save(task);
+//		}
+//	}
 //	@Override
 //	public Optional<Task> findById(Integer taskId) {
 //		return taskRepository.findByTaskId(taskId);
@@ -138,13 +141,7 @@ public class TaskServiceImpl implements ITaskService {
 //		return taskRepository.findByDeletedAtIsNotNull();
 //	}
 //
-//	public void deleteTask(Long id) {
-//		Task task = taskRepository.findById(id).orElse(null);
-//		if (task != null) {
-//			task.setDeletedAt(LocalDateTime.now());
-//			taskRepository.save(task);
-//		}
-//	}
+
 //
 //	public void restoreTask(Long id) {
 //		Task task = taskRepository.findById(id).orElse(null);

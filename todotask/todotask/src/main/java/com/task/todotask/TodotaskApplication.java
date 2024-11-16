@@ -34,12 +34,12 @@ public class TodotaskApplication {
 		return bean;
 	}
 
-	@Bean
-	FilterRegistrationBean jwtFilter(){
-		System.out.println("In jwt Filter()");
-		FilterRegistrationBean filter=new FilterRegistrationBean();
-		filter.setFilter(new JwtFilter());
-		filter.addUrlPatterns("/api/v1/task/*");
-		return filter;
-	}
+//	@Bean
+//	FilterRegistrationBean jwtFilter(){
+//		System.out.println("In jwt Filter()");
+//		FilterRegistrationBean filter=new FilterRegistrationBean();
+//		filter.setFilter(new JwtFilter());
+//		filter.addUrlPatterns("/api/v1/task/*");
+//		return filter;
+//	}
 }

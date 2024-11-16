@@ -22,8 +22,8 @@ public class Task {
 	private LocalDate endDate;
 	
 	private String priority;
-	private LocalDateTime createdAt;
-	private LocalDateTime deletedAt;
+	private boolean isDeleted;
+	private LocalDate deletedAt;
 	
 	public Task() {
 		super();
@@ -76,23 +76,23 @@ public class Task {
 		this.priority = priority;
 	}
 
-	public LocalDateTime getCreatedAt() {
-		return createdAt;
+	public boolean getCreatedAt() {
+		return isDeleted;
 	}
 
-	public void setCreatedAt(LocalDateTime createdAt) {
-		this.createdAt = createdAt;
+	public void setCreatedAt(boolean isDeleted) {
+		this.isDeleted = isDeleted;
 	}
 
-	public LocalDateTime getDeletedAt() {
+	public LocalDate getDeletedAt() {
 		return deletedAt;
 	}
 
-	public void setDeletedAt(LocalDateTime deletedAt) {
+	public void setDeletedAt(LocalDate deletedAt) {
 		this.deletedAt = deletedAt;
 	}
 
-	public Task(int taskId, String taskName, String description, String emailID, LocalDate startDate, LocalDate endDate, String priority, LocalDateTime createdAt, LocalDateTime deletedAt) {
+	public Task(int taskId, String taskName, String description, String emailID, LocalDate startDate, LocalDate endDate, String priority, boolean isDeleted, LocalDate deletedAt) {
 		this.taskId = taskId;
 		this.taskName = taskName;
 		this.description = description;
@@ -100,7 +100,7 @@ public class Task {
 		this.startDate = startDate;
 		this.endDate = endDate;
 		this.priority = priority;
-		this.createdAt = createdAt;
+		this.isDeleted = isDeleted;
 		this.deletedAt = deletedAt;
 	}
 
