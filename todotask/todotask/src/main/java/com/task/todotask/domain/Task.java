@@ -89,7 +89,7 @@ public class Task {
 	}
 
 	public void setDeletedAt(LocalDate deletedAt) {
-		this.deletedAt = deletedAt;
+		this.deletedAt = LocalDate.of(9999, 01,01);
 	}
 
 	public Task(int taskId, String taskName, String description, String emailID, LocalDate startDate, LocalDate endDate, String priority, boolean isDeleted, LocalDate deletedAt) {

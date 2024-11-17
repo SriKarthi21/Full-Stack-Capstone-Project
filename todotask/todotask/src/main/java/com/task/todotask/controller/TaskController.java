@@ -3,32 +3,40 @@ package com.task.todotask.controller;
 import java.util.Date;
 import java.util.List;
 
+import com.task.todotask.domain.SequenceGeneratorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import com.task.todotask.domain.Task;
 import com.task.todotask.service.ITaskService;
-
 import jakarta.servlet.http.HttpServletRequest;
-
-
 
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping("/api/v1")
 public class TaskController {
 
-	@Autowired
-	private ITaskService iTaskService;
+
+	private final ITaskService iTaskService;
 	private ResponseEntity responseEntity;
-	@Autowired
 	private HttpServletRequest httpServletRequest;
+
+	@Autowired
+	private SequenceGeneratorService sequenceGeneratorService;
+	@Autowired
+	public TaskController(ITaskService iTaskService,HttpServletRequest httpServletRequest,SequenceGeneratorService sequenceGeneratorService) {
+		this.iTaskService = iTaskService;
+		this.httpServletRequest=httpServletRequest;
+		this.sequenceGeneratorService=sequenceGeneratorService;
+	}
+
 	@PostMapping("/task/addTask")
 	public ResponseEntity<?> addTask(@RequestBody Task task){
 		String emailId=(String) httpServletRequest.getAttribute("emailID");
+		task.setTaskId(sequenceGeneratorService.generateSequence(Task.SEQUENCE_NAME));
+
 		task.setEmailID(emailId);
 		return responseEntity=new ResponseEntity(iTaskService.addTask(task),HttpStatus.CREATED);
 	}
@@ -37,7 +45,7 @@ public class TaskController {
 	public ResponseEntity<?> getAllTask(){
 		return responseEntity=new ResponseEntity(iTaskService.getAllTask(),HttpStatus.OK);
 	}
-	
+//	Hard delete
 	@DeleteMapping("/task/delete/{taskId}")
 	public ResponseEntity<?> addTask(@PathVariable int taskId){
 		return responseEntity=new ResponseEntity(iTaskService.deleteTask(taskId),HttpStatus.OK);
