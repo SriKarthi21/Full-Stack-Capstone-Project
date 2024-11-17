@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import com.task.todotask.domain.Task;
 import com.task.todotask.repository.TaskRepository;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @Service
 public class TaskServiceImpl implements ITaskService {
@@ -30,6 +31,8 @@ public class TaskServiceImpl implements ITaskService {
 	@Override
 	public Task addTask(Task task) {
 		// TODO Auto-generated method stub
+//		task.setDeleted(false);
+//		task.setDeletedAt(LocalDate.now());
 		return taskRepository.save(task);
 	}
 
@@ -42,23 +45,15 @@ public class TaskServiceImpl implements ITaskService {
 
 	@Override
 	@Scheduled(cron = "0 28 12 * * ?")
-//	@Scheduled()
 	public void findTasksDueTomorrow() {
 		// TODO Auto-generated method stub
-
-
 		List<Task> taskList = taskRepository.findAll();
 		LocalDate local = LocalDate.now();
 		for (Task t : taskList) {
-			// today is 15th nov and if end is 16th
-
-			// if(sysdate<endDate-1)
 			if (t.getEndDate() != null && t.getEndDate().minusDays(1).equals(local)) {
 				sendSimpleMail(t);
 			}
 		}
-		// return taks;
-
 	}
 
 	@Override
@@ -67,25 +62,20 @@ public class TaskServiceImpl implements ITaskService {
 
 		try {
 			SimpleMailMessage mailMessage = new SimpleMailMessage();
-//			for (Task t : ListTask) {
 			mailMessage.setFrom(sender);
 			mailMessage.setTo(task.getEmailID());
 			mailMessage.setText("Task:" + task.getTaskName() + " is going to end tomorrow \n" + task.getEndDate()
 					+ "Please complete the task as soon as posible");
-			// mailMessage.setText("Please complete the task as soon as posible");
 			mailMessage.setSubject("Task Completion Remainder email");
 			mailMessage.setCc("balajimadhavan95@gmail.com");
 			javaMailSender.send(mailMessage);
 
-//			}
 			return "Mail Sent Successfully";
 
 		} catch (Exception e) {
 			System.out.println("error:" + e.getMessage());
 			return "Error in sending an Email";
 		}
-
-		// return null;
 	}
 
 	@Override
@@ -108,7 +98,18 @@ public class TaskServiceImpl implements ITaskService {
 	public Optional<Task> findById(Integer taskId) {
 		return Optional.ofNullable(taskRepository.findByTaskId(taskId));
 	}
-
+	@Scheduled(cron = "0 28 12 * * ?")
+	public void findTaskInBinMoreThanSevenDays() {
+		// TODO Auto-generated method stub
+		List<Task> deletedTaskList = taskRepository.findByIsDeletedTrue();
+		LocalDate local = LocalDate.now();
+		for (Task deletedTask : deletedTaskList) {
+			if (deletedTask.getDeletedAt() != null && deletedTask.getDeletedAt().plusDays(3).equals(local)) {
+				deleteTask(deletedTask.getTaskId());
+			}
+		}
+	}
+//	permanent delete delete method
 	@Override
 	public boolean deleteTask(int taskId) {
 		boolean flag = false;
@@ -118,37 +119,37 @@ public class TaskServiceImpl implements ITaskService {
 		}
 		return flag;
 	}
-//	public void deleteTask(Long id) {
-//		Task task = taskRepository.findById(taskId).orElse(null);
-//		if (task != null) {
-//			task.setDeletedAt(LocalDateTime.now());
-//			taskRepository.save(task);
-//		}
-//	}
-//	@Override
-//	public Optional<Task> findById(Integer taskId) {
-//		return taskRepository.findByTaskId(taskId);
-////				findByTaskId(taskId);
-//	}
+//	for softDelete  put method
+	@Override
+	public Task softDeleteTask(Integer taskId) {
+		Task task = taskRepository.findByTaskId(taskId);
+			try {
+				task.setDeleted(true);
+				task.setDeletedAt(LocalDate.from(LocalDateTime.now()));
+				return taskRepository.save(task);
+			} catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+    }
 
-//	
-//	public List<Task> getActiveTasks() {
-//		return taskRepository.findByDeletedAtIsNull();
-//
-//	}
-//
-//	public List<Task> getDeletedTasks() {
-//		return taskRepository.findByDeletedAtIsNotNull();
-//	}
-//
+//for restore  put method
+	@Override
+	public Task restoreTask(Integer taskId) {
+		Task task = taskRepository.findByTaskId(taskId);
+		try{
+			task.setDeleted(false);
+			task.setDeletedAt(null);
+			return taskRepository.save(task);
 
-//
-//	public void restoreTask(Long id) {
-//		Task task = taskRepository.findById(id).orElse(null);
-//		if (task != null) {
-//			task.setDeletedAt(null);
-//			taskRepository.save(task);
-//		}
-//	}
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+    }
+	//	for bin to show deleted task getmethod
+	@Override
+	public List<Task> getAllDeletedTask(@PathVariable String emailID) {
+		return taskRepository.findByEmailIDAndIsDeletedTrue(emailID);
+	}
+
 
 }

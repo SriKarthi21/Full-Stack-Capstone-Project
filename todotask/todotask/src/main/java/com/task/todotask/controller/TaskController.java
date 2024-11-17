@@ -1,5 +1,6 @@
 package com.task.todotask.controller;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -34,21 +35,14 @@ public class TaskController {
 
 	@PostMapping("/task/addTask")
 	public ResponseEntity<?> addTask(@RequestBody Task task){
-		String emailId=(String) httpServletRequest.getAttribute("emailID");
+		String emailID=(String) httpServletRequest.getAttribute("emailID");
 		task.setTaskId(sequenceGeneratorService.generateSequence(Task.SEQUENCE_NAME));
-
-		task.setEmailID(emailId);
 		return responseEntity=new ResponseEntity(iTaskService.addTask(task),HttpStatus.CREATED);
 	}
 	
 	@GetMapping("/task/getAllTask")
 	public ResponseEntity<?> getAllTask(){
 		return responseEntity=new ResponseEntity(iTaskService.getAllTask(),HttpStatus.OK);
-	}
-//	Hard delete
-	@DeleteMapping("/task/delete/{taskId}")
-	public ResponseEntity<?> addTask(@PathVariable int taskId){
-		return responseEntity=new ResponseEntity(iTaskService.deleteTask(taskId),HttpStatus.OK);
 	}
 	
 	@GetMapping("/task/datesBetween")
@@ -69,7 +63,26 @@ public class TaskController {
 	}
 	@GetMapping("/task/email/{emailID}")
 	public ResponseEntity<?> getTaskByEmailID(@PathVariable String emailID){
-		System.out.println("getBYemail called");
 		return responseEntity=new ResponseEntity(iTaskService.getTaskByEmailID(emailID),HttpStatus.OK);
+	}
+	//	Hard/permanent delete
+	@DeleteMapping("/task/delete/{taskId}")
+	public ResponseEntity<?> addTask(@PathVariable int taskId){
+		return responseEntity=new ResponseEntity(iTaskService.deleteTask(taskId),HttpStatus.OK);
+	}
+//	soft delete
+	@PutMapping("task/softDelete/{taskId}")
+	public ResponseEntity<?> softDelete(@PathVariable int taskId){
+		return responseEntity=new ResponseEntity(iTaskService.softDeleteTask(taskId),HttpStatus.OK);
+	}
+//	restore
+	@PutMapping("task/restore/{taskId}")
+	public  ResponseEntity<?> restore(@PathVariable int taskId){
+		return responseEntity=new ResponseEntity(iTaskService.restoreTask(taskId),HttpStatus.OK);
+	}
+//	getDeletedTask
+	@GetMapping("task/getAllDeletedTask/{emailID}")
+	public ResponseEntity<?> getAllDeletedTask(@PathVariable String emailID){
+		return responseEntity=new ResponseEntity(iTaskService.getAllDeletedTask(emailID),HttpStatus.OK);
 	}
 }

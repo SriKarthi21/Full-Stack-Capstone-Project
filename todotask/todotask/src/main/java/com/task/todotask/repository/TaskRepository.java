@@ -14,8 +14,10 @@ public interface TaskRepository extends MongoRepository<Task, Integer>{
 
 	Task findByTaskId(Integer taskId);
 
-	List<Task> findByDeletedAtIsNull();
-	List<Task> findByDeletedAtIsNotNull();
+	List<Task> findByEmailIDAndIsDeletedTrue(String emailID);
+
+	List<Task> findByIsDeletedTrue();
+
 //	@Query("{ 'endDate' : { $gt: ?0, $lt: ?1 } }")
 //	List<Task> findTasksBetweenEndDate(Date d1,Date d2);
 

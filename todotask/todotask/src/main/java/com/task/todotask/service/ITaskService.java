@@ -27,4 +27,9 @@ public interface ITaskService {
 
 	public Optional<Task> findById(Integer taskId);
 
+	public Task softDeleteTask(Integer taskId);
+
+	public Task restoreTask(Integer taskId);
+
+	public List<Task> getAllDeletedTask(String emailID);
 }

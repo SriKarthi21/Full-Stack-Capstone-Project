@@ -76,12 +76,12 @@ public class Task {
 		this.priority = priority;
 	}
 
-	public boolean getCreatedAt() {
+	public boolean isDeleted() {
 		return isDeleted;
 	}
 
-	public void setCreatedAt(boolean isDeleted) {
-		this.isDeleted = isDeleted;
+	public void setDeleted(boolean deleted) {
+		isDeleted = deleted;
 	}
 
 	public LocalDate getDeletedAt() {
@@ -89,7 +89,8 @@ public class Task {
 	}
 
 	public void setDeletedAt(LocalDate deletedAt) {
-		this.deletedAt = LocalDate.of(9999, 01,01);
+//		this.deletedAt = LocalDate.of(9999, 01,01);
+		this.deletedAt=deletedAt;
 	}
 
 	public Task(int taskId, String taskName, String description, String emailID, LocalDate startDate, LocalDate endDate, String priority, boolean isDeleted, LocalDate deletedAt) {
