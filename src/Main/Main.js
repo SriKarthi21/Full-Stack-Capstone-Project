@@ -37,8 +37,9 @@ const Main = ({ prop }) => {
    async function fetchData(){
     const response=await axios.get(`http://localhost:8084/api/v1/task/email/${prop}`,
       {headers:{Authorization:`Bearer ${token}`}})
-      setData(response.data)}
-      fetchData();
+      setData(response.data)
+      console.log(response)
+    }fetchData();
   },[token])
   // console.log("add task",data)
   const handleAddTask=async(addTask)=>{
@@ -66,7 +67,7 @@ const Main = ({ prop }) => {
     try {
       console.log(updatedTask)
       const updatedResponse = await  axios.put(`http://localhost:8084/api/v1/task/update/${updatedTask.taskId}`, updatedTask, {
-        headers: { Authorization: `Bearer ${token}` },
+        headers: { Authorization: `Bearer ${token}` }
       });
       let updatedData=updatedResponse.data
       console.log("task Updated Success",updatedData)
@@ -91,25 +92,48 @@ const Main = ({ prop }) => {
 
   const handleDeleteTask = async (taskId) => {
     console.log(taskId)
-    // try {
-    //   const confirmed = window.confirm('Are you sure you want to delete this task?');
-    //   if (!confirmed) return; // User cancelled
-    //   await axios.delete(`http://localhost:8084/api/v1/task/delete/${taskId}`, {
-    //     headers: { Authorization: `Bearer ${token}` }
-    //   });
-    //   setData(data.filter((task) => task.taskid !== taskId)); 
-    //   enqueueSnackbar("Task deleted successfully!", {
-    //     variant: "success",
-    //     autoHideDuration: 2000,
-    //     anchorOrigin: {
-    //       vertical: "top",
-    //       horizontal: "right",
-    //     }
-    //   });
-    // } catch (error) {
-    //   console.error("Error   deleting Task!", error);
-    //   enqueueSnackbar("Error deleting Task!", { variant: "error" });
-    // }
+    try {
+      const confirmed = window.confirm('Are you sure you want to delete this task?');
+      if (!confirmed) return; // User cancelled
+      await axios.delete(`http://localhost:8084/api/v1/task/delete/${taskId}`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      setData(data.filter((task) => task.taskid !== taskId)); 
+      enqueueSnackbar("Task deleted successfully!", {
+        variant: "success",
+        autoHideDuration: 2000,
+        anchorOrigin: {
+          vertical: "top",
+          horizontal: "right",
+        }
+      });
+    } catch (error) {
+      console.error("Error   deleting Task!", error);
+      enqueueSnackbar("Error deleting Task!", { variant: "error" });
+    }
+  };
+  const handleBinTask = async (taskId) => {
+    console.log(taskId)
+    try {
+      const confirmed = window.confirm('Are you sure you want to delete this task?');
+      if (!confirmed) return; // User cancelled
+      const response=await axios.put(`http://localhost:8084/api/v1/task/softDelete/${taskId}`,
+        {headers:{Authorization:`Bearer ${token}`}})
+      console.log("soft deleted",response)
+      setData(data.filter((task) => task.taskId !== taskId)); 
+      console.log(data)
+      enqueueSnackbar("Task moved to Bin!", {
+        variant: "success",
+        autoHideDuration: 2000,
+        anchorOrigin: {
+          vertical: "top",
+          horizontal: "right",
+        }
+      });
+    } catch (error) {
+      console.error("Error not moved to bin!", error);
+      enqueueSnackbar("Error not moved to bin!", { variant: "error" });
+    }
   };
   return (
     <div>
@@ -126,7 +150,7 @@ const Main = ({ prop }) => {
         {data === undefined ? (
           <p>Invalid Email and Token</p>
         ) : data === null ? (
-          <p>No Data Found</p>
+          <p>Data is Null</p>
         ) : data.length === 0 ? ( 
           <p>No Data Found</p>
         ) : (
@@ -134,7 +158,7 @@ const Main = ({ prop }) => {
             <Grid2  size={{ xs: 3, sm: 4, md: 3 }}>
               <Task key={data.taskId} data={data}
                 handleUpdate={ handleUpdateTask} 
-                onDelete={handleDeleteTask} />
+                onDelete={handleBinTask} />
           </Grid2>
             
           ))

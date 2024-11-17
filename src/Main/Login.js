@@ -70,7 +70,8 @@ export default function Login({onLogin}){
             horizontal: "right",
           }
         });
-        navigate("/user");
+        setTimeout(navigate("/user"),500)
+        
       }catch(e){
         console.log(e)
       }

@@ -16,17 +16,18 @@ const Error = styled.span`
   font-size: 0.8rem;
   margin:0;
 `;
-const Addtask = ({ propMail, onAddTask }) => {
+const Addtask = ({ prop, onAddTask }) => {
   const { register, handleSubmit, formState: { errors, isValid }, trigger, reset } = useForm();
   const [show, setShow] = useState(false);
-
+  const[mail,setMail]=useState(prop)
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
   const onSubmit = (data) => {
     handleClose();
-    let addTask = { ...data, emailID: propMail }
-    console.log("button clicked")
+  console.log("from submit in add task",mail)
+    let addTask = { ...data, emailID: mail,isDeleted:false }
+    console.log("button clicked",addTask)
     onAddTask(addTask);
     reset();
   };
