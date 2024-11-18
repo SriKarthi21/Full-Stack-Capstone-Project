@@ -21,9 +21,9 @@ public class JwtFilter extends GenericFilterBean{
 		HttpServletRequest httpServletRequest=(HttpServletRequest)servletRequest;
         HttpServletResponse httpServletResponse=(HttpServletResponse) servletResponse;
         ServletOutputStream pw=httpServletResponse.getOutputStream();
-        pw.println("any message here");  // this dipplay the message on browser
+//        pw.println("any message here");  // this dipplay the message on browser
       String header=  httpServletRequest.getHeader("Authorization");
-      pw.println(header); // Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJLYXJ0aWsiLCJpc3MiOiJqd3QtYXBwIiwiaWF0IjoxNzI5MDU5MjQ3fQ.ELnMS4W-Pq4GeJX8aMmUhuQ1j7lSOUwZmo58YxMw4lE
+//      pw.println(header); // Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJLYXJ0aWsiLCJpc3MiOiJqd3QtYXBwIiwiaWF0IjoxNzI5MDU5MjQ3fQ.ELnMS4W-Pq4GeJX8aMmUhuQ1j7lSOUwZmo58YxMw4lE
       if(header==null || !header.startsWith("Bearer") ){
         httpServletResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         pw.println("Missing and invalid token");

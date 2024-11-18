@@ -9,11 +9,12 @@ import org.springframework.data.mongodb.repository.Query;
 import com.task.todotask.domain.Task;
 
 public interface TaskRepository extends MongoRepository<Task, Integer>{
-
-	List<Task> findByEmailID(String emailID);
+//main
+	List<Task> findByEmailIDAndIsDeletedFalse(String emailID);
 
 	Task findByTaskId(Integer taskId);
 
+//	bin
 	List<Task> findByEmailIDAndIsDeletedTrue(String emailID);
 
 	List<Task> findByIsDeletedTrue();

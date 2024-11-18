@@ -30,9 +30,6 @@ public class TaskServiceImpl implements ITaskService {
 
 	@Override
 	public Task addTask(Task task) {
-		// TODO Auto-generated method stub
-//		task.setDeleted(false);
-//		task.setDeletedAt(LocalDate.now());
 		return taskRepository.save(task);
 	}
 
@@ -80,7 +77,7 @@ public class TaskServiceImpl implements ITaskService {
 
 	@Override
 	public List<Task> getTaskByEmailID(String emailID) {
-		return taskRepository.findByEmailID(emailID);
+		return taskRepository.findByEmailIDAndIsDeletedFalse(emailID);
 	}
 
 	@Override

@@ -70,8 +70,8 @@ public class TaskController {
 	public ResponseEntity<?> addTask(@PathVariable int taskId){
 		return responseEntity=new ResponseEntity(iTaskService.deleteTask(taskId),HttpStatus.OK);
 	}
-//	soft delete
-	@PutMapping("task/softDelete/{taskId}")
+//	move to bin
+	@PostMapping("task/softDelete/{taskId}")
 	public ResponseEntity<?> softDelete(@PathVariable int taskId){
 		return responseEntity=new ResponseEntity(iTaskService.softDeleteTask(taskId),HttpStatus.OK);
 	}
