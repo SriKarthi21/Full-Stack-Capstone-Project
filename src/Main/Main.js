@@ -25,22 +25,27 @@ const Main = ({ prop }) => {
   console.log("this is toke",token)
   const[mail,setMail]=useState(prop);
   const[data,setData]=useState([]);
-  const [isEditing,setIsEditing]=useState(false);
   const{register,handleSubmit,formState:{errors,isValid},trigger,reset}=useForm();
-  const[updatedTask,setUpdatedTask]=useState({})
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  useEffect(()=>{
-    console.log(prop)
-   async function fetchData(){
-    const response=await axios.get(`http://localhost:8084/api/v1/task/email/${prop}`,
-      {headers:{Authorization:`Bearer ${token}`}})
-      setData(response.data)
-      console.log(response)
-    }fetchData();
-  },[token])
+  
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await axios.get(`http://localhost:8084/api/v1/task/email/${mail}`,
+        { headers: { Authorization: `Bearer ${token}` } });
+      setData(response.data);
+    };
+    if (mail) { // Fetch data only if mail is not null (loading state)
+      fetchData();
+    }
+  }, [mail]);
+
+  useEffect(() => {
+    setMail(prop); 
+  }, [prop]);
+
   // console.log("add task",data)
   const handleAddTask=async(addTask)=>{
     try{
@@ -98,7 +103,7 @@ const Main = ({ prop }) => {
       await axios.delete(`http://localhost:8084/api/v1/task/delete/${taskId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
-      setData(data.filter((task) => task.taskid !== taskId)); 
+      setData(data.filter((task) => task.taskId !== taskId)); 
       enqueueSnackbar("Task deleted successfully!", {
         variant: "success",
         autoHideDuration: 2000,
@@ -158,7 +163,7 @@ const Main = ({ prop }) => {
             <Grid2  size={{ xs: 3, sm: 4, md: 3 }}>
               <Task key={data.taskId} data={data}
                 handleUpdate={ handleUpdateTask} 
-                onDelete={handleBinTask} />
+                onDelete={handleDeleteTask} />
           </Grid2>
             
           ))
