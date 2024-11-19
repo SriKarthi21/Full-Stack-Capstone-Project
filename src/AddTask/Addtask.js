@@ -10,13 +10,23 @@ import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
-
+import { useNavigate } from 'react-router-dom';
 const Error = styled.span`
   color: red;
   font-size: 0.8rem;
   margin:0;
 `;
+
+const Buttons=styled.span`
+    padding: '10px 20px',
+    backgroundColor: '#007bff',
+    color: 'white',
+    border: 'none',
+    borderRadius: '5px',
+    cursor: 'pointer',
+`;
 const Addtask = ({ prop, onAddTask }) => {
+  const navigate = useNavigate();
   const { register, handleSubmit, formState: { errors, isValid }, trigger, reset } = useForm();
   const [show, setShow] = useState(false);
   const[mail,setMail]=useState(prop)
@@ -32,16 +42,26 @@ const Addtask = ({ prop, onAddTask }) => {
     reset();
   };
 
+
+
   return (
     <div >
       <>
-        <Button variant="primary" onClick={handleShow}>
+       
+       
+      <Button variant="primary" onClick={handleShow}>
           Add Task
         </Button>
 
+
+        {/* <Button variant="secondary" onClick={handleShow}>
+          Recycle bin
+        </Button> */}
+        
         <Modal show={show} onHide={handleClose}  >
           <Modal.Header closeButton>
             <Modal.Title>Add Task</Modal.Title>
+            {/* <Modal.Title>Recycle Bin</Modal.Title> */}
           </Modal.Header>
           <Modal.Body>
             <Form onSubmit={onSubmit}>
@@ -107,6 +127,9 @@ const Addtask = ({ prop, onAddTask }) => {
             </Button>
           </Modal.Footer>
         </Modal>
+       
+       
+        
       </>
 
     </div>

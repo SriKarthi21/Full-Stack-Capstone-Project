@@ -29,7 +29,7 @@ async function handleLogin(data){
   console.log("login method called "+data.userEmailID,data.userPassword)
   try{
     
-    const loginResponse=await axios.post(`http://localhost:8082/api/v1/login-check`,data)
+    const loginResponse=await axios.post(`http://localhost:8083/api/v1/login-check`,data)
     localStorage.setItem('token',loginResponse.data.token)
     // data.userEmailID="john@gmail.com"
     
@@ -52,9 +52,10 @@ async function handleLogin(data){
   <Route path="/login" element={<Login onLogin={handleLogin} />}/>
  <Route path='/signUp' element={<SignUp/>}/> 
   <Route path="/user" element={<Main prop={mail}  />}/>
-  <Route path="/bin" element={<Bin />}/>
+  <Route path="/bin" element={<Bin prop={mail} />}/>
   {/* <Route path="/update/:taskId" element={<UpdateTask initialToken={initialToken}/>} /> */}
   <Route path="*" element={<PageNotFound/>}  />
+ 
 </Routes>
 <Footer/>
 </BrowserRouter>

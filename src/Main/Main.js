@@ -14,10 +14,11 @@ import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import { Grid2 } from '@mui/material';
 import Box from '@mui/material/Box';
+// import Button from 'react-bootstrap/Button';
+import { useNavigate } from 'react-router-dom';
 
 
-
-const Main = ({ prop }) => {
+const Main = ({ prop ,restore}) => {
   // prop contains taskId taskName startDate endDate priority
   const { enqueueSnackbar } = useSnackbar(); 
   console.log(prop)
@@ -25,15 +26,19 @@ const Main = ({ prop }) => {
   console.log("this is toke",token)
   const[mail,setMail]=useState(prop);
   const[data,setData]=useState([]);
+  
   const{register,handleSubmit,formState:{errors,isValid},trigger,reset}=useForm();
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  console.log(restore);
+  console.log(prop);
   
+  const navigate=useNavigate();
   useEffect(() => {
     const fetchData = async () => {
-      const response = await axios.get(`http://localhost:8084/api/v1/task/email/${mail}`,
+      const response = await axios.get(`http://localhost:8085/api/v1/task/email/${mail}`,
         { headers: { Authorization: `Bearer ${token}` } });
       setData(response.data);
     };
@@ -49,7 +54,7 @@ const Main = ({ prop }) => {
   // console.log("add task",data)
   const handleAddTask=async(addTask)=>{
     try{
-      const response=await axios.post("http://localhost:8084/api/v1/task/addTask",addTask,
+      const response=await axios.post("http://localhost:8085/api/v1/task/addTask",addTask,
         {headers:{Authorization:`Bearer ${token}`}})
         console.log("Task added"+response.data)
       setData([...data,response.data]);
@@ -66,12 +71,15 @@ const Main = ({ prop }) => {
       enqueueSnackbar("Error adding Task!", { variant: "error" }); 
     }
   };
-
+  
+  // const handleBinClick = () => {
+  //   navigate('/bin')
+  // }
 
   const handleUpdateTask = async (updatedTask) => {
     try {
       console.log(updatedTask)
-      const updatedResponse = await  axios.put(`http://localhost:8084/api/v1/task/update/${updatedTask.taskId}`, updatedTask, {
+      const updatedResponse = await  axios.put(`http://localhost:8085/api/v1/task/update/${updatedTask.taskId}`, updatedTask, {
         headers: { Authorization: `Bearer ${token}` }
       });
       let updatedData=updatedResponse.data
@@ -94,51 +102,33 @@ const Main = ({ prop }) => {
       enqueueSnackbar("Error updating Task!", { variant: "error" });
     }
   };
+  const navigateToRecycleBin=()=>{
+    navigate("/bin")
+  }
 
-  const handleDeleteTask = async (taskId) => {
-    console.log(taskId)
-    try {
-      const confirmed = window.confirm('Are you sure you want to delete this task?');
-      if (!confirmed) return; // User cancelled
-      await axios.delete(`http://localhost:8084/api/v1/task/delete/${taskId}`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
-      setData(data.filter((task) => task.taskId !== taskId)); 
-      enqueueSnackbar("Task deleted successfully!", {
-        variant: "success",
-        autoHideDuration: 2000,
-        anchorOrigin: {
-          vertical: "top",
-          horizontal: "right",
-        }
-      });
-    } catch (error) {
-      console.error("Error   deleting Task!", error);
-      enqueueSnackbar("Error deleting Task!", { variant: "error" });
-    }
-  };
+  
   const handleBinTask = async (taskId) => {
     console.log(taskId)
-    try {
-      const confirmed = window.confirm('Are you sure you want to delete this task?');
-      if (!confirmed) return; // User cancelled
-      const response=await axios.put(`http://localhost:8084/api/v1/task/softDelete/${taskId}`,
-        {headers:{Authorization:`Bearer ${token}`}})
-      console.log("soft deleted",response)
-      setData(data.filter((task) => task.taskId !== taskId)); 
-      console.log(data)
-      enqueueSnackbar("Task moved to Bin!", {
-        variant: "success",
-        autoHideDuration: 2000,
-        anchorOrigin: {
-          vertical: "top",
-          horizontal: "right",
-        }
-      });
-    } catch (error) {
-      console.error("Error not moved to bin!", error);
-      enqueueSnackbar("Error not moved to bin!", { variant: "error" });
-    }
+    // try {
+    //   const confirmed = window.confirm('Are you sure you want to delete this task?');
+    //   if (!confirmed) return; // User cancelled
+    //   const response=await axios.put(`http://localhost:8085/api/v1/task/softDelete/${taskId}`,
+    //     {headers:{Authorization:`Bearer ${token}`}})
+    //   console.log("soft deleted",response)
+    //   setData(data.filter((task) => task.taskId !== taskId)); 
+    //   console.log(data)
+    //   enqueueSnackbar("Task moved to Bin!", {
+    //     variant: "success",
+    //     autoHideDuration: 2000,
+    //     anchorOrigin: {
+    //       vertical: "top",
+    //       horizontal: "right",
+    //     }
+    //   });
+    // } catch (error) {
+    //   console.error("Error not moved to bin!", error);
+    //   enqueueSnackbar("Error not moved to bin!", { variant: "error" });
+    // }
   };
   return (
     <div>
@@ -148,6 +138,11 @@ const Main = ({ prop }) => {
     container alignContent={'center'} minHeight={600} >
       <Addtask prop={prop} onAddTask={handleAddTask} />
 
+     {/* <Link to="/bin">
+         Recycle
+        </Link> */}
+<Button variant="primary" onClick={navigateToRecycleBin}>Recycle Bin</Button>
+        
       <Box sx={{ width: '100%' }}>
       <Grid2  container spacing={{ xs: 2, md: 1 }} 
         columns={{ xs: 3, sm: 8, md: 12 }}  >
@@ -163,17 +158,17 @@ const Main = ({ prop }) => {
             <Grid2  size={{ xs: 3, sm: 4, md: 3 }}>
               <Task key={data.taskId} data={data}
                 handleUpdate={ handleUpdateTask} 
-                onDelete={handleDeleteTask} />
+                // onDelete={handleDeleteTask} 
+                />
           </Grid2>
             
           ))
         )}
         </Grid2>
+        
       </Box>
-      <main draggable className="container mt-4 mb-4">
       
-      </main>
-      </Grid2>
+       </Grid2>
     </div>
   )
 }
