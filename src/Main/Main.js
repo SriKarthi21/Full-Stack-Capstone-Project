@@ -52,6 +52,8 @@ const Main = ({ prop }) => {
 
   // console.log("add task",data)
   const handleAddTask=async(addTask)=>{
+  addTask.emailID= mail
+    addTask.isDeleted=false
     try{
       const response=await axios.post("http://localhost:8085/api/v1/task/addTask",addTask,
         {headers:{Authorization:`Bearer ${token}`}})
@@ -133,11 +135,11 @@ const Main = ({ prop }) => {
        justifyContent={'center'} padding={5}
     // bgcolor={'rgb(26, 118, 173)'} 
     container alignContent={'center'} minHeight={600} >
-      {/* {imageResponse} */}
+     
       
       
 
-      <Addtask prop={prop} onAddTask={handleAddTask} />
+      <Addtask  onAddTask={handleAddTask} />
 
      {/* <Link to="/bin">
          Recycle

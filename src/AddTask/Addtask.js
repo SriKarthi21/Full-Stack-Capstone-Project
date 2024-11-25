@@ -25,20 +25,17 @@ const Buttons=styled.span`
     borderRadius: '5px',
     cursor: 'pointer',
 `;
-const Addtask = ({ prop, onAddTask }) => {
+const Addtask = ({  onAddTask }) => {
   const navigate = useNavigate();
   const { register, handleSubmit, formState: { errors, isValid }, trigger, reset } = useForm();
   const [show, setShow] = useState(false);
-  const[mail,setMail]=useState(prop)
+
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
   const onSubmit = (data) => {
     handleClose();
-  console.log("from submit in add task",mail)
-    let addTask = { ...data, emailID: mail,isDeleted:false }
-    console.log("button clicked",addTask)
-    onAddTask(addTask);
+    onAddTask(data);
     reset();
   };
 
