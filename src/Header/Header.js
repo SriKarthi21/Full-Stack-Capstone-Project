@@ -19,7 +19,7 @@ const Image = styled.img`
 
 
 
-function Header() {
+function Header({imageSrc}) {
   const navigate = useNavigate();
 
   const handleLoginClick = () => {
@@ -38,13 +38,6 @@ function Header() {
     margin-right: auto;
   `
 
-  // .error {
-  //   width: 600px;
-  //   text-align: center;
-  //   margin: 0 auto;
-  //   font-size: 1.3em;
-  // }
-
   const Header = styled.div`
   background-color: wheat;
   color: rgb(10, 65, 168);
@@ -62,8 +55,9 @@ function Header() {
 `
 
   const CompanyName = styled.h1`
-  text-shadow: #ef0a0a;
-  font-family: "Lora", serif;
+  text-shadow: #ef0a0a;font-family: "Bungee Spice", sans-serif;
+  font-weight: 400;
+  font-style: normal;
   font-size: 50px;
   color:blue;
 `
@@ -72,35 +66,6 @@ backgrounColor:blue;
 padding:20px;
 justify-Content:space-between;
 `
-  // .headerLogo {
-  //   height: 70px;
-  //   width: 100px;
-  //   margin-right: 20px;
-  //   border-radius: 20px;
-  // }
-
-  // .footer {
-  //   display: flex;
-  //   justify-content: space-between;
-  //   padding: 20px;
-  //   color: white;
-  //   background-color: black;
-  // }
-
-  // .social-icons {
-  //   display: flex;
-  // }
-
-  // .social-icons li {
-  //   margin: 0 10px;
-  //   font-size: 24px;
-  //   list-style-type: none;
-
-  // }
-
-  // .social-media {
-  //   text-align: center;
-  // }
 
 
   return (
@@ -117,7 +82,13 @@ justify-Content:space-between;
         </Link>
         <Button style={{ marginLeft: "20px" }} variant="contained" color="success" onClick={handleLoginClick}>Login</Button>
         <Button style={{ marginLeft: "20px" }} variant="contained" color="success" onClick={handleSignUpClick}>Sign Up</Button>
-
+      
+            {imageSrc ? (
+                <img style={{height:"50px"}} src={imageSrc} alt="User Image" />
+            ) : (
+                <p></p>
+            )}
+        
       </Nav>
 
     </Header>

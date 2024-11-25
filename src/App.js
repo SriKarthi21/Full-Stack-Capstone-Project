@@ -22,9 +22,7 @@ import { useNavigate } from 'react-router-dom';
 
 function App() {
   const[mail,setMail]=useState("");
-
-const[initialToken,setToken]=useState("");
-
+  const[imageSrc,setImageSrc]=useState("")
 async function handleLogin(data){
   console.log("login method called "+data.userEmailID,data.userPassword)
   try{
@@ -35,7 +33,10 @@ async function handleLogin(data){
     
     setMail(data.userEmailID)
     console.log("mailid is",data.userEmailID)
-    
+    const imageResponse = await fetch(`http://localhost:8083/api/v1/getImage/${data.userEmailID}`);
+        const imageBlob = await imageResponse.blob();
+        const imageUrl = URL.createObjectURL(imageBlob);
+        setImageSrc(imageUrl);
   }catch(e){
     console.log(e)
   }
@@ -44,7 +45,7 @@ async function handleLogin(data){
   return (
     <div >
       <BrowserRouter>
-<Header/>
+<Header imageSrc={imageSrc}/>
 
 <Routes style={{height:"90%"}}>
 

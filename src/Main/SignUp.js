@@ -61,9 +61,16 @@ function SignUp() {
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
     const { enqueueSnackbar } = useSnackbar(); 
     const onSubmit = (data) => {
-        saveUser(data);
-        console.log(data);
-        reset();
+        const formData = new FormData();
+    formData.append('userName',   data.userName);
+    formData.append('userEmailID', data.userEmailID);
+    formData.append('userPassword', data.userPassword);
+    formData.append('image', data.image[0]); 
+
+        saveUser(formData);
+       
+        console.log(formData);
+        // reset();
     }
 
     
@@ -71,27 +78,24 @@ function SignUp() {
     async function saveUser(data) {
         try {
             console.log(data);
-            const backEndUrl="http://localhost:8082/api/v1/register";
+            const backEndUrl="http://localhost:8083/api/v1/register";
             const response=await axios.post(backEndUrl,data);
             console.log(response);
             
             // alert(`User  ${data.userName} registered successfully`)
-            if(response.status===201)
-{
-    enqueueSnackbar("Registeration successfully!", {
-        variant: "success",
-        autoHideDuration: 2000, // 2 seconds
-        anchorOrigin: {
-          vertical: "top",
-          horizontal: "right",
-        },
-      });
-}
+            if(response.status===201){
+                enqueueSnackbar("Registeration successfully!", {
+                variant: "success",
+                autoHideDuration: 2000, // 2 seconds
+                    anchorOrigin: {
+                    vertical: "top",
+                    horizontal: "right",
+                    },
+                });
+            }
         console.log('done');
-        
-
         } catch (error) {
-
+            console.log("error",error)
         }
     }
 
@@ -101,43 +105,7 @@ function SignUp() {
     container alignContent={'center'} minHeight={600}>       <Container>
             <Title>Registration Form</Title>
             <form onSubmit={handleSubmit(onSubmit)}>
-
-                <Input type="text"
-                    id="emailID"
-                    placeholder="Enter EmailID" {...register(
-                        "emailID", {
-                        required: {
-                            value: true,
-                            message: 'Email-ID is Required.'
-                        },
-                        pattern: {
-                            value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-                            message: 'Please enter a valid email address'
-                        }
-                    }
-                    )} />
-                {errors.emailID && (
-                    <Error>{errors.emailID.message}</Error>
-                )}
-
-                <Input type="password"
-                    id="password"
-                    placeholder="Enter Password" {...register(
-                        "password", {
-                        required: {
-                            value: true,
-                            message: 'Password is Required'
-                        },
-                        minLength: {
-                            value: 6,
-                            message: 'Password must contains alteast 8 characters'
-                        }
-                    }
-                    )} />
-                {errors.password && (
-                    <Error>{errors.password.message}</Error>
-                )}
-                <Input type="text"
+            <Input type="text"
                     id="userName"
                     placeholder="Enter UserName" {...register(
                         "userName", {
@@ -161,38 +129,45 @@ function SignUp() {
                 )}
 
                 <Input type="text"
-                    id="address"
-                    placeholder="Enter Address" {...register(
-                        "address", {
+                    id="userEmailID"
+                    placeholder="Enter EmailID" {...register(
+                        "userEmailID", {
                         required: {
                             value: true,
-                            message: 'Address is Required'
-                        }
-                    }
-                    )} />
-                {errors.address && (
-                    <Error>{errors.address.message}</Error>
-                )}
-                <Input type="number"
-                    id="pin"
-                    placeholder="Enter Pincode" {...register(
-                        "pincode", {
-                        required: {
-                            value: true,
-                            message: 'Pin code is Required'
+                            message: 'Email-ID is Required.'
                         },
-
                         pattern: {
-                            value: "^[0-9]+$",
-                            message: 'Pin code must contain only digits'
-
+                            value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                            message: 'Please enter a valid email address'
                         }
                     }
                     )} />
-                {errors.pincode && (
-                    <Error>{errors.pincode.message}</Error>
+                {errors.userEmailID && (
+                    <Error>{errors.useruserEmailID.message}</Error>
                 )}
 
+                <Input type="password"
+                    id="userPassword"
+                    placeholder="Enter Password" {...register(
+                        "userPassword", {
+                        required: {
+                            value: true,
+                            message: 'Password is Required'
+                        },
+                        minLength: {
+                            value: 6,
+                            message: 'Password must contains alteast 8 characters'
+                        }
+                    }
+                    )} />
+                {errors.userPassword && (
+                    <Error>{errors.userPassword.message}</Error>
+                )}
+              <Input
+        {...register("image")}
+        type="file" 
+        accept="image/*"
+      />
                 <ButtonContainer>
                     <Button type="submit">Submit</Button>
                     <Button type="reset" onClick={() => reset()}>

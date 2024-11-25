@@ -16,9 +16,9 @@ import { Grid2 } from '@mui/material';
 import Box from '@mui/material/Box';
 // import Button from 'react-bootstrap/Button';
 import { useNavigate } from 'react-router-dom';
+import CardMedia from '@mui/material';
 
-
-const Main = ({ prop ,restore}) => {
+const Main = ({ prop }) => {
   // prop contains taskId taskName startDate endDate priority
   const { enqueueSnackbar } = useSnackbar(); 
   console.log(prop)
@@ -26,14 +26,12 @@ const Main = ({ prop ,restore}) => {
   console.log("this is toke",token)
   const[mail,setMail]=useState(prop);
   const[data,setData]=useState([]);
-  
   const{register,handleSubmit,formState:{errors,isValid},trigger,reset}=useForm();
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  console.log(restore);
-  console.log(prop);
+
   
   const navigate=useNavigate();
   useEffect(() => {
@@ -41,6 +39,7 @@ const Main = ({ prop ,restore}) => {
       const response = await axios.get(`http://localhost:8085/api/v1/task/email/${mail}`,
         { headers: { Authorization: `Bearer ${token}` } });
       setData(response.data);
+    
     };
     if (mail) { // Fetch data only if mail is not null (loading state)
       fetchData();
@@ -71,10 +70,7 @@ const Main = ({ prop ,restore}) => {
       enqueueSnackbar("Error adding Task!", { variant: "error" }); 
     }
   };
-  
-  // const handleBinClick = () => {
-  //   navigate('/bin')
-  // }
+
 
   const handleUpdateTask = async (updatedTask) => {
     try {
@@ -130,12 +126,17 @@ const Main = ({ prop ,restore}) => {
     //   enqueueSnackbar("Error not moved to bin!", { variant: "error" });
     // }
   };
+ 
   return (
     <div>
        <Grid2 display={'flex'} 
        justifyContent={'center'} padding={5}
     // bgcolor={'rgb(26, 118, 173)'} 
     container alignContent={'center'} minHeight={600} >
+      {/* {imageResponse} */}
+      
+      
+
       <Addtask prop={prop} onAddTask={handleAddTask} />
 
      {/* <Link to="/bin">
