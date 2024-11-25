@@ -76,7 +76,7 @@ public class TaskController {
 		return responseEntity=new ResponseEntity(iTaskService.softDeleteTask(taskId),HttpStatus.OK);
 	}
 //	restore
-	@PutMapping("task/restore/{taskId}")
+	@GetMapping("task/restore/{taskId}")
 	public  ResponseEntity<?> restore(@PathVariable int taskId){
 		return responseEntity=new ResponseEntity(iTaskService.restoreTask(taskId),HttpStatus.OK);
 	}

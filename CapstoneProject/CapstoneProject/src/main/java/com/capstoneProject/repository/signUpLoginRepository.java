@@ -4,12 +4,14 @@ import org.springframework.data.repository.CrudRepository;
 
 import com.capstoneProject.domain.User;
 
-import java.util.List;
+import java.util.Optional;
 
 public interface signUpLoginRepository extends CrudRepository<User, Integer> {
 
     User findByUserEmailIDAndUserPassword(String userEmail, String userPassword);
-    String findByUserEmailID(String userEmailID);
+    User findByUserEmailID(String userEmailID);
     boolean existsByUserEmailID(String email);
+
+//    Optional<User> findByimageData(String fileName);
 
 }

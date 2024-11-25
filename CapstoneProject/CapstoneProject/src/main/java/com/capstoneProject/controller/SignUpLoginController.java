@@ -9,11 +9,12 @@ import jakarta.validation.Valid;
 
 import java.util.Map;
 
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -31,12 +32,12 @@ public class SignUpLoginController {
 	private SecurityTokenGenerator securityTokenGenerator;
 
 	@PostMapping("/register")
-	public ResponseEntity<?> register(@Valid	@RequestBody User user) throws EmailAlreadyExistsException {
+	public ResponseEntity<?> register(@Valid	@ModelAttribute User user, @RequestParam("image")MultipartFile userImage) throws EmailAlreadyExistsException {
 		//responseEntity = new ResponseEntity(iSignUpLoginService.save(user), HttpStatus.CREATED);
 		try {
 		//iSignUpLoginService.sendSimpleMail(user);
 			System.out.println("Email response is:"+iSignUpLoginService.sendSimpleMail(user));
-		responseEntity=new ResponseEntity(iSignUpLoginService.save(user),HttpStatus.CREATED);
+		responseEntity=new ResponseEntity(iSignUpLoginService.save(user,userImage ),HttpStatus.CREATED);
 		}catch (EmailAlreadyExistsException e) {
 			// TODO: handle exception
 			throw new EmailAlreadyExistsException();
@@ -47,18 +48,30 @@ public class SignUpLoginController {
 		}
 		return responseEntity;
 	}
-
 	@PostMapping("/login-check")
 	public ResponseEntity<?> login(@RequestBody User user) {
 		User result = null;
 		user = iSignUpLoginService.findByUserEmailAndPassword(user.getUserEmailID(), user.getUserPassword());
 		if (user != null) {
-			Map<String, String> map = securityTokenGenerator.generateToken(user);
-			String token = map.get("token");
-			System.out.println("Token is:" + token);
+			Map<String, String> map=securityTokenGenerator.generateToken(user);
+			String token=map.get("token");
+			System.out.println("Token is:"+token);
 			responseEntity = new ResponseEntity(securityTokenGenerator.generateToken(user), HttpStatus.OK);
-		} else {
-			responseEntity = new ResponseEntity("Email and Password is null", HttpStatus.NO_CONTENT);
+		}
+		return responseEntity;
+	}
+
+	@GetMapping("/getImage/{userEmail}")
+	public ResponseEntity<?> login(@PathVariable String userEmail) {
+		User result = null;
+		byte[] image=iSignUpLoginService.findImage(userEmail);
+		System.out.println("ImageDB"+image);
+		if (image != null) {
+			return ResponseEntity.status(HttpStatus.OK)
+					.contentType(MediaType.valueOf("image/png"))
+					.body(image);
+		}else {
+			responseEntity = new ResponseEntity("User Image is null", HttpStatus.NO_CONTENT);
 		}
 		return responseEntity;
 	}
