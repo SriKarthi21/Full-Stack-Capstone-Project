@@ -36,6 +36,8 @@ async function handleLogin(data){
     const imageResponse = await fetch(`http://localhost:8083/api/v1/getImage/${data.userEmailID}`);
         const imageBlob = await imageResponse.blob();
         const imageUrl = URL.createObjectURL(imageBlob);
+        console.log(imageUrl);
+        
         setImageSrc(imageUrl);
   }catch(e){
     console.log(e)

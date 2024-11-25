@@ -116,7 +116,7 @@ const Task = ({ data, handleUpdate, onDelete }) => {
       </Modal>
       <Card sx={{
         maxWidth: 300, maxHeight: 300, m: 2, bgcolor: "rgb(36, 218, 173)",
-        borderRadius: 3, boxShadow: "5px 5px 10px rgb(210, 71, 228)"
+        borderRadius: 3
       }} >
 
         <div className="card">

@@ -105,26 +105,26 @@ const Main = ({ prop }) => {
   
   const handleBinTask = async (taskId) => {
     console.log(taskId)
-    // try {
-    //   const confirmed = window.confirm('Are you sure you want to delete this task?');
-    //   if (!confirmed) return; // User cancelled
-    //   const response=await axios.put(`http://localhost:8085/api/v1/task/softDelete/${taskId}`,
-    //     {headers:{Authorization:`Bearer ${token}`}})
-    //   console.log("soft deleted",response)
-    //   setData(data.filter((task) => task.taskId !== taskId)); 
-    //   console.log(data)
-    //   enqueueSnackbar("Task moved to Bin!", {
-    //     variant: "success",
-    //     autoHideDuration: 2000,
-    //     anchorOrigin: {
-    //       vertical: "top",
-    //       horizontal: "right",
-    //     }
-    //   });
-    // } catch (error) {
-    //   console.error("Error not moved to bin!", error);
-    //   enqueueSnackbar("Error not moved to bin!", { variant: "error" });
-    // }
+    try {
+      const confirmed = window.confirm('Are you sure you want to delete this task?');
+      if (!confirmed) return; // User cancelled
+      const response=await axios.post(`http://localhost:8085/api/v1/task/softDelete/${taskId}`,
+        {headers:{Authorization:`Bearer ${token}`}})
+      console.log("soft deleted",response)
+      setData(data.filter((task) => task.taskId !== taskId)); 
+      console.log(data)
+      enqueueSnackbar("Task moved to Bin!", {
+        variant: "success",
+        autoHideDuration: 2000,
+        anchorOrigin: {
+          vertical: "top",
+          horizontal: "right",
+        }
+      });
+    } catch (error) {
+      console.error("Error not moved to bin!", error);
+      enqueueSnackbar("Error not moved to bin!", { variant: "error" });
+    }
   };
  
   return (
@@ -159,7 +159,7 @@ const Main = ({ prop }) => {
             <Grid2  size={{ xs: 3, sm: 4, md: 3 }}>
               <Task key={data.taskId} data={data}
                 handleUpdate={ handleUpdateTask} 
-                // onDelete={handleDeleteTask} 
+                 onDelete={handleBinTask} 
                 />
           </Grid2>
             

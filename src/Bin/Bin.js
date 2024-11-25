@@ -20,20 +20,21 @@ const Bin = ({prop}) => {
     const [restoreTask,setRestoreTask]=useState([]);
     let token = localStorage.getItem('token')
     const { enqueueSnackbar } = useSnackbar(); 
-    // useEffect( () => {
-    //    async function fetchDeletedTask(){
-    //     const response = axios.get(`http://localhost:8085/api/v1/task/getAllDeletedTask/${emailID}`,
-    //          {
-    //         headers: {
-    //              Authorization: `Bearer ${token}` 
-    //             }
-    //     }
-    // )
-    //     setTasks(response.data);
-    //     // this mehtod return isDeleted=true cards 
-    //     console.log(response.data);}
-    //     // fetchDeletedTask();
-    // }, []);
+    useEffect( () => {
+        async function fetchDeletedTask(){
+        const response = axios.get(`http://localhost:8085/api/v1/task/getAllDeletedTask/balajimadhavan95@gmail.com`,
+        //const response = axios.get(`http://localhost:8085/api/v1/task/getAllDeletedTask/${emailID}`,
+             {
+            headers: {
+                 Authorization: `Bearer ${token}` 
+                }
+        }
+    )
+        setTasks(response.data);
+        // this mehtod return isDeleted=true cards 
+        console.log(response.data);}
+         fetchDeletedTask();
+    }, [tasks]);
 
     const navigate=useNavigate();
     const navigateToUser=()=>{
@@ -118,8 +119,15 @@ const Bin = ({prop}) => {
         <div>
             {/* <button onClick={fetchDeletedTask}>get delete</button> */}
             <div style={{display:"flex"}}>
-            { 
-                tasks.map((val) => (
+            
+                    {tasks === undefined ? (
+                        <p>Invalid Email and Token</p>
+                      ) : tasks === null ? (
+                        <p>Data is Null</p>
+                      ) : tasks.length === 0 ? ( 
+                        <p>No Data Found</p>
+                      ) :
+               ( tasks.map((val) => (
                     
                     <Grid2  size={{ xs: 3, sm: 4, md: 3 }}>
                     <div style={{display:"flex",flexDirection:"column",
@@ -143,7 +151,7 @@ const Bin = ({prop}) => {
                     
                    ))
 
-            } 
+    )} 
 </div>   
             <button onClick={restore}>Restjorejj</button>
             <p>Bin component</p>
