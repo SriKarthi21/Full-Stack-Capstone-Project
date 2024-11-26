@@ -3,7 +3,7 @@ import './App.css';
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import Addtask from './AddTask/Addtask';
@@ -13,24 +13,26 @@ import Footer from './Footer/Footer';
 import Login from './Main/Login';
 import SignUp from './Main/SignUp';
 import HomePage from'./Main/HomePage';
-
 import Bin from './Bin/Bin';
 import Header from './Header/Header';
 import { set } from 'react-hook-form';
 import UpdateTask from './UpdateTask/UpdateTask';
 import { useNavigate } from 'react-router-dom';
+import AuthContext from './AuthContext/AuthContext';
 
 function App() {
   const[mail,setMail]=useState("");
-  const[imageSrc,setImageSrc]=useState("")
+  const[imageSrc,setImageSrc]=useState("");
+  const {isLoggedIn,login}=useContext(AuthContext);
 async function handleLogin(data){
   console.log("login method called "+data.userEmailID,data.userPassword)
   try{
     
     const loginResponse=await axios.post(`http://localhost:8083/api/v1/login-check`,data)
     localStorage.setItem('token',loginResponse.data.token)
-    // data.userEmailID="john@gmail.com"
-    
+    // if(loginResponse.data.token!=null){
+      login()
+    // }
     setMail(data.userEmailID)
     console.log("mailid is",data.userEmailID)
     const imageResponse = await fetch(`http://localhost:8083/api/v1/getImage/${data.userEmailID}`);
@@ -54,9 +56,9 @@ async function handleLogin(data){
  <Route path="/" element={<HomePage/>}/> 
   <Route path="/login" element={<Login onLogin={handleLogin} />}/>
  <Route path='/signUp' element={<SignUp/>}/> 
-  <Route path="/user" element={<Main prop={mail}  />}/>
-  <Route path="/bin" element={<Bin prop={mail} />}/>
-  {/* <Route path="/update/:taskId" element={<UpdateTask initialToken={initialToken}/>} /> */}
+ {isLoggedIn && (<Route path="/user" element={<Main prop={mail}  />}/>)}
+  {isLoggedIn && (<Route path="/bin" element={<Bin prop={mail} />}/>)}
+  
   <Route path="*" element={<PageNotFound/>}  />
  
 </Routes>

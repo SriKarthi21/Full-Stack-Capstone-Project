@@ -128,8 +128,11 @@ const Task = ({ data, handleUpdate, onDelete }) => {
               className="text-muted">Start Date : {data?.startDate}</small></p>
             <p className="card-text"><small className="text-muted">End Date : {data?.endDate}</small></p>
             <p className="card-text">{data?.priority}</p>
-            <Button onClick={() => handleEditClick(data)}>Edit</Button>
-            <Button variant="danger" type="button" className="btn btn-primary" onClick={()=>onDelete(data.taskId)} >Delete</Button>
+            <span class="container-eg-btn-3" style={{justifyContent:"space-between"}}>
+
+            <button class="button button-1" onClick={() => handleEditClick(data)}>Edit</button>
+            <button   class="button2 button-2" onClick={()=>onDelete(data.taskId)} >Delete</button>
+          </span>
           </div>
         </div>
       </Card>

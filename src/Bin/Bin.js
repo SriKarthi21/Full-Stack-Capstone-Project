@@ -66,13 +66,15 @@ const Bin = ({prop}) => {
     }
   };
     return (
-        <div>
-          
-<Button variant="primary" onClick={navigateToUser}>Go to User</Button>
+        <Grid2 minHeight={600} >
+          <span class="container-eg-btn-3" >
+          <button class="button button-1"  onClick={navigateToUser}>Dashboard</button>
+
+          </span>
             <div style={{display:"flex"}}>
-            <Box sx={{ width: '100%' }}>
-            <Grid2  container spacing={{ xs: 2, md: 1 }} 
-        columns={{ xs: 3, sm: 8, md: 12 }}  >
+            <Box sx={{ width: '100%' }} >
+            <h3>Task will be deleted after 3 days</h3>
+
                        {tasks === undefined ? (
                         <p>Invalid Email and Token</p>
                       ) : tasks === null ? (
@@ -80,32 +82,40 @@ const Bin = ({prop}) => {
                       ) : tasks.length === 0 ? ( 
                         <p>No Data Found</p>
                       ) :
-               ( tasks.map((val) => (
+               ( tasks.map((task) => (
                 <Grid2  size={{ xs: 3, sm: 4, md: 3 }}>
                   <Card sx={{
         maxWidth: 300, maxHeight: 300, m: 2, bgcolor: "rgb(36, 218, 173)",
         borderRadius: 3
-      }} >
+      }} > 
         <div className="card">
           <div className="card-body">
-            <h5 className="card-title">{val.taskName}</h5>
-            <p className="card-text">{val.description}</p>
-            <p className="card-text"><small className="text-muted">Start Date:{val.startDate} </small></p>
-            <p className="card-text"><small className="text-muted">End Date : {val.endDate}</small></p>
-            <p className="card-text">{val?.priority}</p>
-            <Button onClick={() => restore(val.taskId)}>Restore</Button>
-            <Button variant="danger" type="button" className="btn btn-primary" onClick={()=>handleDeleteTask(val.taskId)} >Delete</Button>
-          </div>
+            <h5 className="card-title">{task.taskName}</h5>
+            <p className="card-text">{task.description}</p>
+            <p className="card-text"><small className="text-muted">Start Date:{task.startDate} </small></p>
+            <p className="card-text"><small className="text-muted">End Date : {task.endDate}</small></p>
+            <p className="card-text">{task?.priority}</p>
+            <span class="container-eg-btn-3" 
+            style={{fontSize:"12px"}}
+            >
+
+            <button class="button button-1" 
+            onClick={() => restore(task.taskId)}>
+              Restore</button>
+            <button  class="button2 button-2" onClick={()=>handleDeleteTask(task.taskId)} >Delete</button>
+          </span>
+          
+                  </div>
         </div>
       </Card>
             </Grid2>  
 ))
     )} 
-        </Grid2>
             </Box>
        
-</div>   
-        </div>
+</div>  
+ {/* </Grid2> */}
+        </Grid2>
     )
 }
 

@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Link } from 'react-router-dom';
 import styled from "styled-components";
 import { useNavigate } from 'react-router-dom';
 import Nav from 'react-bootstrap/Nav';
-import { Button, Container, FormControl, Grid2, Input, TextField, Typography } from '@mui/material'
-
+import { Button, Container, FormControl, Grid, Grid2, Input, TextField, Typography } from '@mui/material'
+import AuthContext from '../AuthContext/AuthContext';
+import { enqueueSnackbar } from 'notistack'
 
 
 
@@ -21,13 +22,18 @@ const Image = styled.img`
 
 function Header({imageSrc}) {
   const navigate = useNavigate();
-
-  const handleLoginClick = () => {
-    navigate('/login')
-  }
-
-  const handleSignUpClick = () => {
-    navigate('/signUp')
+  const {isLoggedIn,logout}=useContext(AuthContext);
+  const handleLogout = () => {
+    enqueueSnackbar("Logut Successfully !!!", {
+      variant: "info",
+      autoHideDuration: 2000,
+      anchorOrigin: {
+        vertical: "top",
+        horizontal: "center"
+      }
+    });
+    logout();
+   
   }
 
   const Container = styled.div`
@@ -75,19 +81,41 @@ justify-Content:space-between;
       </HeaderContainer>
 
       <Nav>
-
-
-        <Link style={{ marginLeft: "20px" }} to="/">
+      <Grid2  >
+      <Link style={{ marginLeft: "20px" }} to="/">
           <Button variant="contained" color="success">Home</Button>
         </Link>
-        <Button style={{ marginLeft: "20px" }} variant="contained" color="success" onClick={handleLoginClick}>Login</Button>
-        <Button style={{ marginLeft: "20px" }} variant="contained" color="success" onClick={handleSignUpClick}>Sign Up</Button>
-      
-            {imageSrc ? (
-                <img style={{height:"50px"}} src={imageSrc} alt="User Image" />
+          {isLoggedIn ? (
+            <span>
+            <Link to="/">
+              <Button style={{ marginLeft: "20px" }} variant="contained" color="success"onClick={handleLogout}> Logout</Button>
+            </Link>
+             {imageSrc ? (
+             <img style={{height:"50px",marginLeft:"10px"}}  src={imageSrc} alt="User Image" />
+
             ) : (
-                <p></p>
-            )}
+                 <p></p>
+                )
+            }  
+           
+            </span>
+          ) : (
+            <span>
+            <Link to="/login">
+              <Button style={{ marginLeft: "20px" }} variant="contained" color="success"> Login</Button>
+            </Link>
+            <Link to="/signUp">
+        <Button style={{ marginLeft: "20px" }} variant="contained" color="success" >Sign Up</Button>
+
+            </Link>
+            </span>
+          )}
+
+        </Grid2>
+      
+
+      
+            
         
       </Nav>
 

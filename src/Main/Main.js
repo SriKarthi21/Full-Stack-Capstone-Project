@@ -21,12 +21,11 @@ import CardMedia from '@mui/material';
 const Main = ({ prop }) => {
   // prop contains taskId taskName startDate endDate priority
   const { enqueueSnackbar } = useSnackbar(); 
-  console.log(prop)
+  // console.log(prop)
   const token=localStorage.getItem('token');
-  console.log("this is toke",token)
+  // console.log("token is",token)
   const[mail,setMail]=useState(prop);
   const[data,setData]=useState([]);
-  const{register,handleSubmit,formState:{errors,isValid},trigger,reset}=useForm();
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -100,9 +99,7 @@ const Main = ({ prop }) => {
       enqueueSnackbar("Error updating Task!", { variant: "error" });
     }
   };
-  const navigateToRecycleBin=()=>{
-    navigate("/bin")
-  }
+ 
 
   
   const handleBinTask = async (taskId) => {
@@ -130,21 +127,15 @@ const Main = ({ prop }) => {
   };
  
   return (
-    <div>
-       <Grid2 display={'flex'} 
-       justifyContent={'center'} padding={5}
-    // bgcolor={'rgb(26, 118, 173)'} 
-    container alignContent={'center'} minHeight={600} >
-     
-      
-      
+    <Grid2 minHeight={"600px"}>
+      <span class="container-eg-btn-3" style={{justifyContent:"space-around"}}>
+      <Addtask     onAddTask={handleAddTask} />
 
-      <Addtask  onAddTask={handleAddTask} />
+      <Link to="/bin"  class="button button-1" >Recycle Bin</Link>
 
-     {/* <Link to="/bin">
-         Recycle
-        </Link> */}
-<Button variant="primary" onClick={navigateToRecycleBin}>Recycle Bin</Button>
+            </span>
+
+
         
       <Box sx={{ width: '100%' }}>
       <Grid2  container spacing={{ xs: 2, md: 1 }} 
@@ -171,8 +162,8 @@ const Main = ({ prop }) => {
         
       </Box>
       
-       </Grid2>
-    </div>
+       
+    </Grid2>
   )
 }
 

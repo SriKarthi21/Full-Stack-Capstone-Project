@@ -46,9 +46,9 @@ const Addtask = ({  onAddTask }) => {
       <>
        
        
-      <Button variant="primary" onClick={handleShow}>
+      <p class="button button-1" onClick={handleShow}>
           Add Task
-        </Button>
+        </p>
 
 
         {/* <Button variant="secondary" onClick={handleShow}>

@@ -4,10 +4,13 @@ import { useNavigate } from 'react-router-dom';
 import {useForm} from "react-hook-form";
 import styled from "styled-components";
 import axios from "axios";
+import { useContext } from 'react';
+ import AuthContext from '../AuthContext/AuthContext';
 import { useSnackbar } from "notistack";
 import { Grid2 } from '@mui/material';
 export default function Login({onLogin}){
   const { enqueueSnackbar } = useSnackbar(); 
+  const {isLoggedIn,logout}=useContext(AuthContext);
   const {register, handleSubmit,reset,formState:{errors}}=useForm();  
   const Title=styled.h3`
   color:gray;
@@ -62,16 +65,30 @@ export default function Login({onLogin}){
   const onSubmit=(data)=>{
     try{
         onLogin(data);
-        enqueueSnackbar("Login successfully!", {
-          variant: "success",
-          autoHideDuration: 2000, 
-          anchorOrigin: {
-            vertical: "top",
-            horizontal: "right",
-          }
-        });
-        setTimeout(navigate("/user"),500)
         
+        if(isLoggedIn){
+          // setTimeout(
+          // enqueueSnackbar("Login successfully!", {
+          //   variant: "success",
+          //   autoHideDuration: 2000, 
+          //   anchorOrigin: {
+          //     vertical: "top",
+          //     horizontal: "right",
+          //   }
+          // }),
+          navigate("/user")
+          // ,500)
+        }
+        else{
+          enqueueSnackbar("Unable to login! User details are not valid ", {
+            variant: "info",
+            autoHideDuration: 2000, 
+            anchorOrigin: {
+              vertical: "top",
+              horizontal: "right",
+            }
+          });
+        }
       }catch(e){
         console.log(e)
       }
