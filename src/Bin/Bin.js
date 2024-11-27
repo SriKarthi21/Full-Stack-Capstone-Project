@@ -74,7 +74,8 @@ const Bin = ({prop}) => {
             <div style={{display:"flex"}}>
             <Box sx={{ width: '100%' }} >
             <h3>Task will be deleted after 3 days</h3>
-
+            <Grid2  container spacing={{ xs: 2, md: 1 }} 
+        columns={{ xs: 3, sm: 8, md: 12 }}  >
                        {tasks === undefined ? (
                         <p>Invalid Email and Token</p>
                       ) : tasks === null ? (
@@ -89,28 +90,28 @@ const Bin = ({prop}) => {
         borderRadius: 3
       }} > 
         <div className="card">
-          <div className="card-body">
+          <div className={`task ${task.priority}  card-body`} >
             <h5 className="card-title">{task.taskName}</h5>
-            <p className="card-text">{task.description}</p>
-            <p className="card-text"><small className="text-muted">Start Date:{task.startDate} </small></p>
-            <p className="card-text"><small className="text-muted">End Date : {task.endDate}</small></p>
+            <p className="card-text">Description : {task.description}</p>
+            <p className="card-text"><small>Start Date:{task.startDate} </small></p>
+            <h6 className="card-text"style={{}} >End Date : {task.endDate}</h6>
             <p className="card-text">{task?.priority}</p>
-            <span class="container-eg-btn-3" 
-            style={{fontSize:"12px"}}
+            <span class="container-eg-btn-3" style={{justifyContent:"space-between",fontSize:"5px"}}
             >
 
-            <button class="button button-1" 
+            <button  className="button button-1"
             onClick={() => restore(task.taskId)}>
               Restore</button>
-            <button  class="button2 button-2" onClick={()=>handleDeleteTask(task.taskId)} >Delete</button>
+            <button  className="button2 button-2" onClick={()=>handleDeleteTask(task.taskId)} >Delete</button>
           </span>
           
                   </div>
         </div>
       </Card>
             </Grid2>  
+            
 ))
-    )} 
+    )} </Grid2>
             </Box>
        
 </div>  

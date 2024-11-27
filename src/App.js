@@ -19,28 +19,40 @@ import { set } from 'react-hook-form';
 import UpdateTask from './UpdateTask/UpdateTask';
 import { useNavigate } from 'react-router-dom';
 import AuthContext from './AuthContext/AuthContext';
+import { useSnackbar } from "notistack";
 
 function App() {
   const[mail,setMail]=useState("");
   const[imageSrc,setImageSrc]=useState("");
   const {isLoggedIn,login}=useContext(AuthContext);
+  const { enqueueSnackbar } = useSnackbar(); 
+  
+
 async function handleLogin(data){
   console.log("login method called "+data.userEmailID,data.userPassword)
   try{
     
     const loginResponse=await axios.post(`http://localhost:8083/api/v1/login-check`,data)
     localStorage.setItem('token',loginResponse.data.token)
-    // if(loginResponse.data.token!=null){
+    if(loginResponse.data.token!=null){
       login()
-    // }
     setMail(data.userEmailID)
     console.log("mailid is",data.userEmailID)
     const imageResponse = await fetch(`http://localhost:8083/api/v1/getImage/${data.userEmailID}`);
         const imageBlob = await imageResponse.blob();
         const imageUrl = URL.createObjectURL(imageBlob);
         console.log(imageUrl);
-        
         setImageSrc(imageUrl);
+       
+    }else{
+      enqueueSnackbar("Create an account for Login!", {
+        variant: "info",
+        autoHideDuration: 2000, 
+        anchorOrigin: {
+          vertical: "top",
+          horizontal: "center", }
+       } )
+    }
   }catch(e){
     console.log(e)
   }

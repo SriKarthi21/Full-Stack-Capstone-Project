@@ -52,9 +52,6 @@ function Header({imageSrc}) {
 
 `
   const HeaderContainer = styled.div`
-  display: flex;
-  background-color: white;
-  border-radius: 20px;
   padding-right: 10px;
   margin:5px 20px;
  
@@ -77,7 +74,7 @@ justify-Content:space-between;
   return (
     <Header>
       <HeaderContainer>
-        <CompanyName >To Do Tracker</CompanyName>
+        <img src="logo1.png" alt='Logo' class="logo" />
       </HeaderContainer>
 
       <Nav>

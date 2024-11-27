@@ -54,8 +54,8 @@ const Main = ({ prop }) => {
   addTask.emailID= mail
     addTask.isDeleted=false
     try{
-      const response=await axios.post("http://localhost:8085/api/v1/task/addTask",addTask,
-        {headers:{Authorization:`Bearer ${token}`}})
+      const response=await axios.post("http://localhost:8085/api/v1/task/addTask",addTask,{
+        headers: { Authorization: `Bearer ${token}` }})
         console.log("Task added"+response.data)
       setData([...data,response.data]);
       enqueueSnackbar("Task added successfully!", {
@@ -106,9 +106,10 @@ const Main = ({ prop }) => {
     console.log(taskId)
     try {
       const confirmed = window.confirm('Are you sure you want to delete this task?');
-      if (!confirmed) return; // User cancelled
-      const response=await axios.post(`http://localhost:8085/api/v1/task/softDelete/${taskId}`,
-        {headers:{Authorization:`Bearer ${token}`}})
+      if (!confirmed) return; 
+      console.log(token)
+       const response=await axios.post(`http://localhost:8085/api/v1/task/softDelete/${taskId}`,{
+     },{ headers: { Authorization: `Bearer ${token}` }})
       console.log("soft deleted",response)
       setData(data.filter((task) => task.taskId !== taskId)); 
       console.log(data)
@@ -117,11 +118,12 @@ const Main = ({ prop }) => {
         autoHideDuration: 2000,
         anchorOrigin: {
           vertical: "top",
-          horizontal: "right",
+          horizontal: "center",
         }
       });
-    } catch (error) {
-      console.error("Error not moved to bin!", error);
+     
+    } catch (e) {
+      console.error("Not to bin!", e);
       enqueueSnackbar("Error not moved to bin!", { variant: "error" });
     }
   };

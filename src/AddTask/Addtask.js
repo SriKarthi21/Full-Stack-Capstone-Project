@@ -107,9 +107,9 @@ const Addtask = ({  onAddTask }) => {
                   autoFocus onBlur={(e) => trigger('priority')}
                   aria-label="Default select example">
                   <option>--Select Options--</option>
-                  <option value="High">High</option>
-                  <option value="Low">Medium</option>
-                  <option value="Medium">Low</option>
+                  <option value="High">High</option>+
+                  <option value="Medium">Medium</option>
+                  <option value="Low">Low</option>
                 </Form.Select><Error>{errors.priority?.message}</Error>
               </Form.Group>
             </Form>

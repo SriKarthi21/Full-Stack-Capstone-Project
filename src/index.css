@@ -5,6 +5,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: rgb(119, 104, 104);
 }
 
 code {
@@ -25,6 +26,7 @@ code {
 }
 .container-eg-btn-3 .button {
   color: #fff;
+  font-size: small;
   margin: 20px;
   padding: 12px 15px;
   text-align: center;
@@ -34,11 +36,12 @@ code {
   z-index: 1;
   background: #3aaeff;
   cursor: pointer;
-  border-radius: 20px;
+  border-radius: 15px;
   text-decoration: double;
 }
 .container-eg-btn-3 .button2 {
   color: #fff;
+  font-size:small;
   margin: 20px;
   padding: 12px 15px;
   text-align: center;
@@ -48,16 +51,45 @@ code {
   z-index: 1;
   background: #ff001e;
   cursor: pointer;
-  border-radius: 20px;
+  border-radius: 15px;
   text-decoration: double;
 }
 .container-eg-btn-3 .button-1:hover {
-  box-shadow: 0 0.6em 0.5em -0.4em rgb(131,58,180);
+  box-shadow: 0 0.6em 0.5em -0.4em rgb(22, 22, 22);
   transform: translateY(-0.25em);
-  background: rgb(131,58,180);
+  background:rgb(22, 22, 22);
 }
 .container-eg-btn-3 .button-2:hover {
   box-shadow: 0 0.6em 0.5em -0.4em rgb(22, 21, 21);;
   transform: translateY(-0.25em);
-  background: rgb(22, 22, 22);;
+  background: rgb(22, 22, 22);
+}
+.logo {
+
+  width: 400px; 
+  height: 80px; 
+  display: block;
+  margin: 0 auto; 
+
+  
+  border-radius: 5px; 
+  /* box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);  */
+}.task {
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.task.High {
+  background-color: rgb(242, 157, 157);
+  color: #000;
+}
+
+.task.Medium {
+  background-color: rgb(232, 232, 149);
+  color: #000;
+}
+
+.task.Low {
+  background-color: rgb(221, 250, 221);
+  color: #000;
 }

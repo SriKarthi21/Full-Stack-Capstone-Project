@@ -15,6 +15,11 @@ const Error = styled.span`
   font-size: 0.8rem;
   margin:0;
 `;
+const priorityClass = {
+  high: 'bg-red-500 text-white',
+  medium: 'bg-yellow-400 text-black',
+  low: 'bg-green-300 text-white',
+};
 
 const Task = ({ data, handleUpdate, onDelete }) => {
   const [updatedTask, setUpdatedTask] = useState({
@@ -115,19 +120,18 @@ const Task = ({ data, handleUpdate, onDelete }) => {
         </Form>
       </Modal>
       <Card sx={{
-        maxWidth: 300, maxHeight: 300, m: 2, bgcolor: "rgb(36, 218, 173)",
-        borderRadius: 3
+        maxWidth: 300, maxHeight: 300, m: 2,         borderRadius: 3
       }} >
 
-        <div className="card">
-          <div className="card-body">
-            <h5 className="card-title">{data?.taskName}</h5>
+        <div className={`card`} >
+          <div  className={`task ${data.priority}  card-body`} >
+            <h5 className="card-title" > {data?.taskName}</h5>
             {/* <p className="card-text">{data?.emailID}</p> */}
-            <p className="card-text">{data?.description}</p>
-            <p className="card-text"><small
-              className="text-muted">Start Date : {data?.startDate}</small></p>
-            <p className="card-text"><small className="text-muted">End Date : {data?.endDate}</small></p>
-            <p className="card-text">{data?.priority}</p>
+            <p className="card-text">Description : {data?.description}</p>
+            <h6 
+              className="card-text">Start Date : {data?.startDate}</h6>
+            <p className="card-text"><small >End Date : {data?.endDate}</small></p>
+            <p className="card-text">Priority : {data?.priority}</p>
             <span class="container-eg-btn-3" style={{justifyContent:"space-between"}}>
 
             <button class="button button-1" onClick={() => handleEditClick(data)}>Edit</button>

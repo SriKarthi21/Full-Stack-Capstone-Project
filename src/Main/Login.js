@@ -66,31 +66,31 @@ export default function Login({onLogin}){
     try{
         onLogin(data);
         
-        if(isLoggedIn){
-          // setTimeout(
-          // enqueueSnackbar("Login successfully!", {
-          //   variant: "success",
-          //   autoHideDuration: 2000, 
-          //   anchorOrigin: {
-          //     vertical: "top",
-          //     horizontal: "right",
-          //   }
-          // }),
-          navigate("/user")
-          // ,500)
-        }
-        else{
-          enqueueSnackbar("Unable to login! User details are not valid ", {
-            variant: "info",
-            autoHideDuration: 2000, 
-            anchorOrigin: {
-              vertical: "top",
-              horizontal: "right",
-            }
-          });
-        }
-      }catch(e){
-        console.log(e)
+        console.log(isLoggedIn);
+        
+          setTimeout(()=>{
+           console.log(isLoggedIn);
+           if(isLoggedIn){
+            enqueueSnackbar("Login successfully!", {
+              variant: "success",
+              autoHideDuration: 2000, 
+              anchorOrigin: {
+                vertical: "top",
+                horizontal: "center", }
+             } )
+             navigate("/user");}
+         
+            },1000)
+          }catch(e){
+        console.log(e);
+        enqueueSnackbar("Unable to login! User details are not valid ", {
+          variant: "info",
+          autoHideDuration: 2000, 
+          anchorOrigin: {
+            vertical: "top",
+            horizontal: "center",
+          }
+        });
       }
        
        
