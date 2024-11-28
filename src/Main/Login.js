@@ -81,7 +81,7 @@ export default function Login({onLogin}){
              navigate("/user");
             //}
          
-            },1000)
+            },200)
           }catch(e){
         console.log(e);
         enqueueSnackbar("Unable to login! User details are not valid ", {

@@ -27,7 +27,7 @@ code {
 .container-eg-btn-3 .button {
   color: #fff;
   font-size: small;
-  margin: 20px;
+  margin: 0px;
   padding: 12px 15px;
   text-align: center;
   text-transform: uppercase;
@@ -92,4 +92,39 @@ code {
 .task.Low {
   background-color: rgb(221, 250, 221);
   color: #000;
+}
+.date {
+    display: flex;
+    justify-content: center;
+    height: min-content;  transform: skewX(-15deg);
+    /* height: ; */
+    
+}
+.date1{
+  background-color: rgb(251, 247, 250);
+  padding: 10px;
+  margin: 0;
+  /* transform: skewX(-20deg); */
+  /* clip-path: polygon(0% 1.3%, 100% 0%, 75% 100%, 0% 100%); */
+ }
+.date2{
+  /* clip-path: polygon(100% 50%, 100% 100%, 50% 100%,0% 100%); */
+  padding: 10px;
+
+  background-color: rgb(188, 234, 241);
+
+  /* clip-path: polygon(25% 0%, 100% 0%, 100.1% 100.3%, 0% 100%); */
+} 
+.date-line {
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+  transform: skewX(-20deg);
+  height: 50px;
+  margin: 0 10px;
+}
+.pagenotfound{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 75vh; 
 }
