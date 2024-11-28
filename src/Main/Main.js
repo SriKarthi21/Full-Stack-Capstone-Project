@@ -14,11 +14,13 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import { Grid2 } from '@mui/material';
-import Box from '@mui/material/Box';
 // import Button from 'react-bootstrap/Button';
 import { useNavigate } from 'react-router-dom';
 import CardMedia from '@mui/material';
-
+import {Card,CardContent,Typography,CardActions,IconButton, TextField, Box} from "@mui/material";
+import { FaEdit } from "react-icons/fa";
+import AutoDeleteTwoToneIcon from '@mui/icons-material/AutoDeleteTwoTone';
+import RecyclingIcon from '@mui/icons-material/Recycling';
 const Main = ({ prop }) => {
   // prop contains taskId taskName startDate endDate priority
   const { enqueueSnackbar } = useSnackbar(); 
@@ -102,7 +104,7 @@ const handleReset = () => {
         autoHideDuration: 2000, 
         anchorOrigin: {
           vertical: "top",
-          horizontal: "right",
+          horizontal: "center",
         }
       });
     }catch(error){
@@ -130,7 +132,7 @@ const handleReset = () => {
         autoHideDuration: 2000,
         anchorOrigin: {
           vertical: "top",
-          horizontal: "right",
+          horizontal: "center",
         }
       });
     } catch (error) {
@@ -144,7 +146,7 @@ const handleReset = () => {
   const handleBinTask = async (taskId) => {
     console.log(taskId)
     try {
-      const confirmed = window.confirm('Are you sure you want to delete this task?');
+      const confirmed = window.confirm('Are you sure you want to move this task to bin?');
       if (!confirmed) return; 
       console.log(token)
        const response=await axios.post(`http://localhost:8085/api/v1/task/softDelete/${taskId}`,{
@@ -210,7 +212,7 @@ onChange={(e)=>handleFilter(e.target.value)}
       <span class="container-eg-btn-3" style={{justifyContent:"space-around"}}>
       <Addtask     onAddTask={handleAddTask} />
 
-      <Link to="/bin"  class="button button-1" >Recycle Bin</Link>
+      <Link to="/bin"  class="button button-1" > <RecyclingIcon/>Recycle Bin</Link>
 
             </span>
 

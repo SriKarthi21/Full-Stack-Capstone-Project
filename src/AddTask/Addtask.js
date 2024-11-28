@@ -11,6 +11,8 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import { useNavigate } from 'react-router-dom';
+import AddCommentTwoToneIcon from '@mui/icons-material/AddCommentTwoTone';
+
 const Error = styled.span`
   color: red;
   font-size: 0.8rem;
@@ -45,9 +47,8 @@ const Addtask = ({  onAddTask }) => {
     <div >
       <>
        
-       
       <p class="button button-1" onClick={handleShow}>
-          Add Task
+          <AddCommentTwoToneIcon/> Add Task
         </p>
 
 
