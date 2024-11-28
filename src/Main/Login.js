@@ -70,7 +70,7 @@ export default function Login({onLogin}){
         
           setTimeout(()=>{
            console.log(isLoggedIn);
-           if(isLoggedIn){
+           //if(isLoggedIn){
             enqueueSnackbar("Login successfully!", {
               variant: "success",
               autoHideDuration: 2000, 
@@ -78,7 +78,8 @@ export default function Login({onLogin}){
                 vertical: "top",
                 horizontal: "center", }
              } )
-             navigate("/user");}
+             navigate("/user");
+            //}
          
             },1000)
           }catch(e){
