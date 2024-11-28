@@ -6,7 +6,7 @@ import Nav from 'react-bootstrap/Nav';
 import { Button, Container, FormControl, Grid, Grid2, Input, TextField, Typography } from '@mui/material'
 import AuthContext from '../AuthContext/AuthContext';
 import { enqueueSnackbar } from 'notistack'
-import { useState } from 'react';
+
 
 
 
@@ -22,7 +22,6 @@ const Image = styled.img`
 
 function Header({imageSrc}) {
   const navigate = useNavigate();
-  const[hide,setHide]=useState(false);
   const {isLoggedIn,logout}=useContext(AuthContext);
   const handleLogout = () => {
     enqueueSnackbar("Logut Successfully !!!", {
@@ -35,9 +34,6 @@ function Header({imageSrc}) {
     });
     logout();
    
-  }
-  const logoutButton=()=>{
-    setHide(!hide);
   }
 
   const Container = styled.div`
@@ -87,26 +83,15 @@ justify-Content:space-between;
           <Button variant="contained" color="success">Home</Button>
         </Link>
           {isLoggedIn ? (
-            <span style={{marginLeft:"20px"}}>
-          <Link to="/user"class="button button-1" >
-          <Button variant="contained" color="success" >
-            Dashboard
-          </Button>
-          </Link>
-
-             {imageSrc ? (
-              <span style={{marginLeft:"20px"}}  onClick={logoutButton}>
-          
-             <img style={{height:"50px",marginLeft:"10px"}}  src={imageSrc} alt="User Image"/>
-             {hide && <Link to="/">
+            <span>
+            <Link to="/">
               <Button style={{ marginLeft: "20px" }} variant="contained" color="success"onClick={handleLogout}> Logout</Button>
             </Link>
-            }
-                </span>
+             {imageSrc ? (
+             <img style={{height:"50px",marginLeft:"10px"}}  src={imageSrc} alt="User Image" />
+
             ) : (
-                 <p>
-                  
-                 </p>
+                 <p></p>
                 )
             }  
            
