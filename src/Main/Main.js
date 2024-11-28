@@ -17,7 +17,7 @@ import Box from '@mui/material/Box';
 // import Button from 'react-bootstrap/Button';
 import { useNavigate } from 'react-router-dom';
 import CardMedia from '@mui/material';
-
+import RecyclingIcon from '@mui/icons-material/Recycling';
 const Main = ({ prop }) => {
   // prop contains taskId taskName startDate endDate priority
   const { enqueueSnackbar } = useSnackbar(); 
@@ -63,7 +63,7 @@ const Main = ({ prop }) => {
         autoHideDuration: 2000, 
         anchorOrigin: {
           vertical: "top",
-          horizontal: "right",
+          horizontal: "center",
         }
       });
     }catch(error){
@@ -91,7 +91,7 @@ const Main = ({ prop }) => {
         autoHideDuration: 2000,
         anchorOrigin: {
           vertical: "top",
-          horizontal: "right",
+          horizontal: "center",
         }
       });
     } catch (error) {
@@ -105,7 +105,7 @@ const Main = ({ prop }) => {
   const handleBinTask = async (taskId) => {
     console.log(taskId)
     try {
-      const confirmed = window.confirm('Are you sure you want to delete this task?');
+      const confirmed = window.confirm('Are you sure you want to move this task to bin?');
       if (!confirmed) return; 
       console.log(token)
        const response=await axios.post(`http://localhost:8085/api/v1/task/softDelete/${taskId}`,{
@@ -133,7 +133,7 @@ const Main = ({ prop }) => {
       <span class="container-eg-btn-3" style={{justifyContent:"space-around"}}>
       <Addtask     onAddTask={handleAddTask} />
 
-      <Link to="/bin"  class="button button-1" >Recycle Bin</Link>
+      <Link to="/bin"  class="button button-1" > <RecyclingIcon/>Recycle Bin</Link>
 
             </span>
 

@@ -10,11 +10,15 @@ import Main from '../Main/Main'
 import { useSnackbar } from "notistack";
 import { useNavigate } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
-import { Card, Box } from '@mui/material';
+import { Card, Box,IconButton } from '@mui/material';
+import RestoreIcon from '@mui/icons-material/Restore';
+import DeleteIcon from "@mui/icons-material/Delete";
+import { Link } from 'react-router-dom';
+import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
+import DeleteOutlineTwoToneIcon from '@mui/icons-material/DeleteOutlineTwoTone';
 const Bin = ({prop}) => {
     const [emailID, setEmailID] = useState(prop)
     const [tasks, setTasks] = useState([]);
-    const [restoreTask,setRestoreTask]=useState([]);
     let token = localStorage.getItem('token')
     const { enqueueSnackbar } = useSnackbar(); 
     useEffect( () => {
@@ -29,9 +33,7 @@ const Bin = ({prop}) => {
     }, [emailID]);
 
     const navigate=useNavigate();
-    const navigateToUser=()=>{
-        navigate("/user")
-    }
+    
     
     const restore=async (taskId) => {
         // console.log({taskId});
@@ -39,8 +41,15 @@ const Bin = ({prop}) => {
             headers: { Authorization: `Bearer ${token}` }
         })
         const results=(tasks.filter((task) => task.taskId !== taskId));
-        // console.log(results);
         setTasks(results);
+        enqueueSnackbar("Task Restored!", {
+          variant: "success",
+          autoHideDuration: 3000,
+          anchorOrigin: {
+            vertical: "top",
+            horizontal: "center",
+          }
+        });
     }
 
    const handleDeleteTask = async (taskId) => {
@@ -54,10 +63,10 @@ const Bin = ({prop}) => {
       setTasks(tasks.filter((task) => task.taskId !== taskId)); 
       enqueueSnackbar("Task deleted successfully!", {
         variant: "success",
-        autoHideDuration: 2000,
+        autoHideDuration: 3000,
         anchorOrigin: {
           vertical: "top",
-          horizontal: "right",
+          horizontal: "center",
         }
       });
     } catch (error) {
@@ -68,12 +77,13 @@ const Bin = ({prop}) => {
     return (
         <Grid2 minHeight={600} >
           <span class="container-eg-btn-3" >
-          <button class="button button-1"  onClick={navigateToUser}>Dashboard</button>
+          <Link to="/user"class="button button-1" >Dashboard</Link>
 
           </span>
-            <div style={{display:"flex"}}>
-            <Box sx={{ width: '100%' }} >
-            <h3>Task will be deleted after 3 days</h3>
+       
+            
+            <Box sx={{ width: '100%'}} >
+            <h3 style={{textAlign:'center'}}>Task will be permanently deleted after 3 days</h3>
             <Grid2  container spacing={{ xs: 2, md: 1 }} 
         columns={{ xs: 3, sm: 8, md: 12 }}  >
                        {tasks === undefined ? (
@@ -86,24 +96,37 @@ const Bin = ({prop}) => {
                ( tasks.map((task) => (
                 <Grid2  size={{ xs: 3, sm: 4, md: 3 }}>
                   <Card sx={{
-        maxWidth: 300, maxHeight: 300, m: 2, bgcolor: "rgb(36, 218, 173)",
+        maxWidth: 300,  m: 2, bgcolor: "rgb(36, 218, 173)",
         borderRadius: 3
       }} > 
         <div className="card">
-          <div className={`task ${task.priority}  card-body`} >
+          <div className={`task ${task.priority}  card-body`} style={{padding:"10px",textAlign:"center"}}>
             <h5 className="card-title">{task.taskName}</h5>
             <p className="card-text">Description : {task.description}</p>
-            <p className="card-text"><small>Start Date:{task.startDate} </small></p>
-            <h6 className="card-text"style={{}} >End Date : {task.endDate}</h6>
-            <p className="card-text">{task?.priority}</p>
-            <span class="container-eg-btn-3" style={{justifyContent:"space-between",fontSize:"5px"}}
-            >
+            <div className="date ">
+              <span className="date1">
+                Start 
+              <p className="card-text "> {task?.startDate}</p>
+              </span>
+              {/* <span className='date-line'></span> */}
+              <span className='date2'>
+                End 
+              <h6 className="card-text "><small > {task?.endDate}</small></h6> 
 
-            <button  className="button button-1"
-            onClick={() => restore(task.taskId)}>
-              Restore</button>
-            <button  className="button2 button-2" onClick={()=>handleDeleteTask(task.taskId)} >Delete</button>
-          </span>
+              </span>
+           </div>
+           
+            {/* <h6 className="card-text"style={{justifyContent:"space-between"}} >End Date : {task.endDate}</h6> */}
+            <p className="card-text">Priority : {task?.priority}</p>
+            <span class="container-eg-btn-3" style={{justifyContent:"space-between"}}
+            >
+            <IconButton className="button button-1" color="info" onClick={() => restore(task.taskId)} >
+              <RestoreIcon />Reset
+            </IconButton>
+            <IconButton className="button2 button-2" color="error"  onClick={()=>handleDeleteTask(task.taskId)} >
+              <DeleteIcon />Delete
+            </IconButton>
+            </span>
           
                   </div>
         </div>
@@ -114,8 +137,7 @@ const Bin = ({prop}) => {
     )} </Grid2>
             </Box>
        
-</div>  
- {/* </Grid2> */}
+
         </Grid2>
     )
 }
