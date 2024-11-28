@@ -1,3 +1,4 @@
+
 import React, { useEffect } from 'react'
 import { Link } from "react-router-dom";
 import { useForm } from 'react-hook-form';
@@ -31,14 +32,52 @@ const Main = ({ prop }) => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+  const [priorityFilter, setPriorityFilter] = useState([]); 
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const [priority, setPriority] = useState("");
+
+const handleFilter = (value) => {
+   let filtered;
+  console.log(value);
   
+  if(value){
+    filtered = data.filter((task) => task.priority === value);
+    console.log(filtered);
+    setPriorityFilter(filtered)
+    
+  }
+  
+
+};
+
+const handleDateFilter =()=>{
+  console.log('in handleDateFilter');
+  console.log(startDate,endDate);
+  let filtered;
+  filtered = data.filter(task => {
+      
+    const taskDate = new Date(task.startDate); // Ensure `startDate` is in your task data
+    return taskDate >= new Date(startDate) && taskDate <= new Date(endDate);
+
+  });
+
+
+  setPriorityFilter(filtered);
+  
+}
+const handleReset = () => {
+  setStartDate("");
+  setEndDate("");
+  setPriorityFilter(data); // Reset to original data
+};
   const navigate=useNavigate();
   useEffect(() => {
     const fetchData = async () => {
       const response = await axios.get(`http://localhost:8085/api/v1/task/email/${mail}`,
         { headers: { Authorization: `Bearer ${token}` } });
       setData(response.data);
-    
+    setPriorityFilter(response.data);
     };
     if (mail) { // Fetch data only if mail is not null (loading state)
       fetchData();
@@ -127,8 +166,46 @@ const Main = ({ prop }) => {
       enqueueSnackbar("Error not moved to bin!", { variant: "error" });
     }
   };
- 
+  console.log(priorityFilter);
   return (
+    <>
+    <Form.Select
+    aria-label="Filter by Priority"
+    // onChange={(e) => setPriorityFilter(e.target.value)}
+onChange={(e)=>handleFilter(e.target.value)}
+    value={priority}
+    style={{ width: '200px'}}
+    className="mb-3"
+  >
+    <option value="">All Priorities</option>
+    <option value="High">High</option>
+    <option value="Medium">Medium</option>
+    <option value="Low">Low</option>
+  </Form.Select>
+  <div style={{ display: "flex", justifyContent: "center", gap: "10px", margin: "20px 0" }}>
+      <input
+        type="date"
+        value={startDate}
+        onChange={(e) => setStartDate(e.target.value)}
+        style={{ padding: "5px" }}
+      />
+      <input
+        type="date"
+        value={endDate}
+        onChange={(e) => setEndDate(e.target.value)}
+        style={{ padding: "5px" }}
+      />
+      <button onClick={handleDateFilter} style={{ padding: "5px 10px" }}>
+        Apply Filter
+      </button>
+
+      <button
+  onClick={handleReset} // Reset to original data
+  style={{ marginLeft: "10px", padding: "5px 10px" }}
+>
+  Reset Filter
+</button>
+    </div>
     <Grid2 minHeight={"600px"}>
       <span class="container-eg-btn-3" style={{justifyContent:"space-around"}}>
       <Addtask     onAddTask={handleAddTask} />
@@ -142,15 +219,19 @@ const Main = ({ prop }) => {
       <Box sx={{ width: '100%' }}>
       <Grid2  container spacing={{ xs: 2, md: 1 }} 
         columns={{ xs: 3, sm: 8, md: 12 }}  >
+         
           
-        {data === undefined ? (
+        {priorityFilter === undefined ? (
           <p>Invalid Email and Token</p>
-        ) : data === null ? (
+        ) : priorityFilter===null? (
           <p>Data is Null</p>
-        ) : data.length === 0 ? ( 
-          <p>No Data Found</p>
-        ) : (
-          data.map((data) => (
+        ) : 
+        // priorityFilter.length===0 ? ( 
+        //   <p>No Data Found</p>
+        // ) 
+        // :
+         (
+          priorityFilter.map((data) => (
             <Grid2  size={{ xs: 3, sm: 4, md: 3 }}>
               <Task key={data.taskId} data={data}
                 handleUpdate={ handleUpdateTask} 
@@ -160,12 +241,31 @@ const Main = ({ prop }) => {
             
           ))
         )}
+      {/* {filterPriority === undefined ? (
+          <p>Invalid Email and Token</p>
+        ) : filterPriority===null? (
+          <p>Data is Null</p>
+        ) : filterPriority.length===0 ? ( 
+          <p>No Data Found</p>
+        ) : (
+          filterPriority.map((data) => (
+            <Grid2  size={{ xs: 3, sm: 4, md: 3 }}>
+              <Task key={data.taskId} data={data}
+                handleUpdate={ handleUpdateTask} 
+                 onDelete={handleBinTask} 
+                />
+          </Grid2>
+            
+          ))
+        )} */}
+
         </Grid2>
         
       </Box>
       
        
     </Grid2>
+    </>
   )
 }
 
