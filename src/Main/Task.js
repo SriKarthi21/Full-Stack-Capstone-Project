@@ -5,11 +5,11 @@ import { useState } from 'react';
 import UpdateTask from '../UpdateTask/UpdateTask';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/esm/Button';
+import { Card, TextField, Box } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import Modal from 'react-bootstrap/Modal';
-import {Card,CardContent,Typography,CardActions,IconButton, TextField, Box} from "@mui/material";
-import { FaEdit } from "react-icons/fa";
-import AutoDeleteTwoToneIcon from '@mui/icons-material/AutoDeleteTwoTone';
+
+
 const Error = styled.span`
   color: red;
   font-size: 0.8rem;
@@ -120,39 +120,23 @@ const Task = ({ data, handleUpdate, onDelete }) => {
         </Form>
       </Modal>
       <Card sx={{
-        maxWidth: 300, m: 2, borderRadius: 3
+        maxWidth: 300, maxHeight: 300, m: 2,         borderRadius: 3
       }} >
 
-        <div className="card" >
-          <div className={`task ${data.priority}  card-body `}style={{padding:"10px",textAlign:"center"}} >
-            <h5 className="card-title" style={{textTransform:"uppercase",borderBottom:"solid"}}> {data?.taskName}</h5>
+        <div className={`card`} >
+          <div  className={`task ${data.priority}  card-body`} >
+            <h5 className="card-title" > {data?.taskName}</h5>
             {/* <p className="card-text">{data?.emailID}</p> */}
-            
             <p className="card-text">Description : {data?.description}</p>
-           
-            <div className="date ">
-              <span className="date1">
-                Start 
-              <p className="card-text "> {data?.startDate}</p>
-              </span>
-              {/* <span className='date-line'></span> */}
-              <span className='date2'>
-                End 
-              <h6 className="card-text "><small > {data?.endDate}</small></h6> 
-
-              </span>
-           </div>
-           <p className="card-text">Priority : {data?.priority}</p>
-
+            <h6 
+              className="card-text">Start Date : {data?.startDate}</h6>
+            <p className="card-text"><small >End Date : {data?.endDate}</small></p>
+            <p className="card-text">Priority : {data?.priority}</p>
             <span class="container-eg-btn-3" style={{justifyContent:"space-between"}}>
-            <IconButton  className="button button-1"  color="info" onClick={() => handleEditClick(data)} >
-              <FaEdit />Edit
-            </IconButton>
-            <IconButton className="button2 button-2" color="error" onClick={() => onDelete(data.taskId)}>
-              <AutoDeleteTwoToneIcon />Bin
-            </IconButton>
-            </span>
-         
+
+            <button class="button button-1" onClick={() => handleEditClick(data)}>Edit</button>
+            <button   class="button2 button-2" onClick={()=>onDelete(data.taskId)} >Delete</button>
+          </span>
           </div>
         </div>
       </Card>
