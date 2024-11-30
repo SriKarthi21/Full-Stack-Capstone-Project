@@ -33,8 +33,10 @@ async function handleLogin(data){
   try{
     
     const loginResponse=await axios.post(`http://localhost:8083/api/v1/login-check`,data)
+    console.log("loginResponse",loginResponse)
     localStorage.setItem('token',loginResponse.data.token)
-    if(loginResponse.data.token!=null){
+    if(loginResponse.status === 200 && loginResponse.data.token){
+      localStorage.setItem('token',loginResponse.data.token)
       login()
     setMail(data.userEmailID)
     console.log("mailid is",data.userEmailID)
@@ -44,7 +46,9 @@ async function handleLogin(data){
         console.log(imageUrl);
         setImageSrc(imageUrl);
        
-    }else{
+    }else if(loginResponse.status===401){
+      localStorage.setItem('token',null)
+
       enqueueSnackbar("Create an account for Login!", {
         variant: "info",
         autoHideDuration: 2000, 
@@ -52,6 +56,16 @@ async function handleLogin(data){
           vertical: "top",
           horizontal: "center", }
        } )
+    } else {
+      console.error("Login failed with status:", loginResponse.status);
+      enqueueSnackbar("Login failed. Please try again later.", {
+        variant: "error",
+        autoHideDuration: 2000,
+        anchorOrigin: {
+          vertical: "top",
+          horizontal: "center",
+        },
+      });
     }
   }catch(e){
     console.log(e)

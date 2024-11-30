@@ -101,7 +101,7 @@ const Bin = ({prop}) => {
       }} > 
         <div className="card">
         <div className={`task ${task.priority}  card-body`} style={{padding:"10px",textAlign:"center"}}>
-        <h5 className="card-title">{task.taskName}</h5>
+        <h5 className="card-title" style={{textTransform:"uppercase",borderBottom:"solid"}}>{task.taskName}</h5>
             <p className="card-text">Description : {task.description}</p>
             <div className="date ">
               <span className="date1">

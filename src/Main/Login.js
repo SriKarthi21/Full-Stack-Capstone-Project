@@ -8,11 +8,8 @@ import { useContext } from 'react';
  import AuthContext from '../AuthContext/AuthContext';
 import { useSnackbar } from "notistack";
 import { Grid2 } from '@mui/material';
-export default function Login({onLogin}){
-  const { enqueueSnackbar } = useSnackbar(); 
-  const {isLoggedIn,logout}=useContext(AuthContext);
-  const {register, handleSubmit,reset,formState:{errors}}=useForm();  
-  const Title=styled.h3`
+
+const Title=styled.h3`
   color:gray;
   font-family: 'Times New Roman';
   font-size: x-large;
@@ -61,16 +58,25 @@ export default function Login({onLogin}){
     outline: 1px solid blue;
   }
   `;
+  
+export default function Login({onLogin}){
+  const { enqueueSnackbar } = useSnackbar(); 
+  const {isLoggedIn,logout}=useContext(AuthContext);
+  const token=localStorage.getItem('token')
+  const {register, handleSubmit,reset,formState:{errors}}=useForm();  
   const navigate = useNavigate();
+
   const onSubmit=(data)=>{
     try{
         onLogin(data);
         
         console.log(isLoggedIn);
-        
-          setTimeout(()=>{
-           console.log(isLoggedIn);
-           //if(isLoggedIn){
+            let token = localStorage.getItem('token')
+
+          // setTimeout(()=>{
+          //  console.log(isLoggedIn);
+           console.log("login token",token)
+           if( token){
             enqueueSnackbar("Login successfully!", {
               variant: "success",
               autoHideDuration: 2000, 
@@ -79,9 +85,9 @@ export default function Login({onLogin}){
                 horizontal: "center", }
              } )
              navigate("/user");
-            //}
+            }
          
-            },200)
+            // },200)
           }catch(e){
         console.log(e);
         enqueueSnackbar("Unable to login! User details are not valid ", {

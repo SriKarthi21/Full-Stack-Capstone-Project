@@ -49,7 +49,7 @@ function Header({imageSrc}) {
   `
 
   const Header = styled.div`
-  background-color: wheat;
+  background-color: #0b61de;
   color: rgb(10, 65, 168);
   display: flex;
   justify-content: space-between;
@@ -78,31 +78,24 @@ justify-Content:space-between;
   return (
     <Header>
       <HeaderContainer>
-        <img src="logo1.png" alt='Logo' class="logo" />
+        <img src="logo1.png" alt='Logo' className="logo" />
       </HeaderContainer>
 
-      <Nav>
+      <Nav onMouseEnter={()=>setHide(true)} onMouseLeave={()=>setHide(false)}>
       <Grid2  >
-      <Link style={{ marginLeft: "20px" }} to="/">
-          <Button variant="contained" color="success">Home</Button>
-        </Link>
           {isLoggedIn ? (
-           <span style={{marginLeft:"20px"}}>
-           <Link to="/user"class="button button-1" >
-           <Button variant="contained" color="success" >
-             Dashboard
-           </Button>
-           </Link>
- 
+           <div style={{marginLeft:"20px",display:"flex"}} >
+          
               {imageSrc ? (
-               <span style={{marginLeft:"20px"}}  onClick={logoutButton}>
+                
+               <div style={{marginLeft:"20px"}}  >
            
               <img style={{height:"50px",marginLeft:"10px"}}  src={imageSrc} alt="User Image"/>
               {hide && <Link to="/">
-               <Button style={{ marginLeft: "20px" }} variant="contained" color="success"onClick={handleLogout}> Logout</Button>
+               <Button style={{ marginLeft: "20px",  top:"10%", right:"1%" }} variant="contained" color="success"onClick={handleLogout}> Logout</Button>
              </Link>
              }
-                </span>        
+                </div>        
                  ) : (
                   <p>
 
@@ -110,9 +103,13 @@ justify-Content:space-between;
                  )
                 }
                 
-                </span>
+                </div>
           ):(
             <span>
+              <Link style={{ marginLeft: "20px" }} to="/">
+          <Button variant="contained" color="success">Home</Button>
+               </Link>
+      
             <Link to="/login">
               <Button style={{ marginLeft: "20px" }} variant="contained" color="success"> Login</Button>
             </Link>
