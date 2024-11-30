@@ -66,10 +66,10 @@ code {
 }
 .logo {
 
-  width: 400px; 
-  height: 80px; 
-  display: block;
-  margin: 0 auto; 
+   width: 350px; 
+  height: 50px; 
+  display: block; 
+  margin: 0 auto;
 
   
   border-radius: 5px; 
@@ -127,4 +127,13 @@ display: flex;
 justify-content: center;
 align-items: center;
 height: 75vh; 
+}
+
+.contactUs{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #eaeaea;
+  background-color: rgb(188, 234, 241);
 }

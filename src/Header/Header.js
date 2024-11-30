@@ -21,7 +21,7 @@ const Image = styled.img`
 
 function Header({imageSrc}) {
   const navigate = useNavigate();
-  
+
   const[hide,setHide]=useState(false);
   const {isLoggedIn,logout}=useContext(AuthContext);
   const handleLogout = () => {
@@ -34,7 +34,7 @@ function Header({imageSrc}) {
       }
     });
     logout();
-   
+
   }
   const logoutButton=()=>{
     setHide(!hide);
@@ -77,58 +77,64 @@ justify-Content:space-between;
 
   return (
     <Header>
+              <div style={{margin:"20px"}}>
+              <Link  to="/">
+            <Button variant="contained" color="success">Home</Button>
+         </Link>
+         <Link style={{ margin: "20px"}} to="/contactUs">
+            <Button variant="contained" color="success">Contact Us</Button>
+         </Link>
+         </div>
       <HeaderContainer>
         <img src="logo1.png" alt='Logo' class="logo" />
       </HeaderContainer>
+      
 
       <Nav>
-      <Grid2  >
-      <Link style={{ marginLeft: "20px" }} to="/">
-          <Button variant="contained" color="success">Home</Button>
-        </Link>
-          {isLoggedIn ? (
-           <span style={{marginLeft:"20px"}}>
-           <Link to="/user"class="button button-1" >
-           <Button variant="contained" color="success" >
-             Dashboard
-           </Button>
-           </Link>
- 
-              {imageSrc ? (
-               <span style={{marginLeft:"20px"}}  onClick={logoutButton}>
-           
-              <img style={{height:"50px",marginLeft:"10px"}}  src={imageSrc} alt="User Image"/>
-              {hide && <Link to="/">
-               <Button style={{ marginLeft: "20px" }} variant="contained" color="success"onClick={handleLogout}> Logout</Button>
-             </Link>
-             }
-                </span>        
-                 ) : (
-                  <p>
+        <Grid2  >
+           {isLoggedIn ? (
+            <span style={{marginLeft:"20px"}}>
+              <Link to="/user"class="button button-1" >
+                <Button variant="contained" color="success" >
+                  Dashboard
+                </Button>
+              </Link>
 
-                  </p>
-                 )
-                }
-                
+              {imageSrc ? (
+                <span style={{marginLeft:"20px"}}onClick={logoutButton}>
+
+                  <img style={{height:"50px",marginLeft:"10px"}}src={imageSrc} alt="User Image"/>
+                  {hide && <Link to="/">
+                    <Button style={{ marginLeft: "20px" }} variant="contained" color="success"onClick={handleLogout}> Logout</Button>
+                  </Link>
+                  }
                 </span>
+              ) : (
+                <p>
+
+                </p>
+              )
+              }
+
+            </span>
           ):(
             <span>
-            <Link to="/login">
-              <Button style={{ marginLeft: "20px" }} variant="contained" color="success"> Login</Button>
-            </Link>
-            <Link to="/signUp">
-        <Button style={{ marginLeft: "20px" }} variant="contained" color="success" >Sign Up</Button>
+              <Link to="/login">
+                <Button style={{ marginLeft: "20px" }} variant="contained" color="success"> Login</Button>
+              </Link>
+              <Link to="/signUp">
+                <Button style={{ marginLeft: "20px" }} variant="contained" color="success" >Sign Up</Button>
 
-            </Link>
+              </Link>
             </span>
-          ) }
+          )} 
 
         </Grid2>
-      
 
-      
-            
-        
+
+
+
+
       </Nav>
 
     </Header>

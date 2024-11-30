@@ -20,7 +20,7 @@ import UpdateTask from './UpdateTask/UpdateTask';
 import { useNavigate } from 'react-router-dom';
 import AuthContext from './AuthContext/AuthContext';
 import { useSnackbar } from "notistack";
-
+import ContactUs from './Main/ContactUs';
 function App() {
   const[mail,setMail]=useState("");
   const[imageSrc,setImageSrc]=useState("");
@@ -66,6 +66,7 @@ async function handleLogin(data){
 <Routes style={{height:"90%"}}>
 
  <Route path="/" element={<HomePage/>}/> 
+ <Route path="/contactUs" element={<ContactUs/>}/> 
   <Route path="/login" element={<Login onLogin={handleLogin} />}/>
  <Route path='/signUp' element={<SignUp/>}/> 
  {isLoggedIn && (<Route path="/user" element={<Main prop={mail}  />}/>)}
