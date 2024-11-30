@@ -199,16 +199,14 @@ const Main = ({ prop }) => {
           onChange={(e) => setEndDate(e.target.value)}
           style={{ padding: "5px" }}
         />
-        <button onClick={handleDateFilter} style={{ padding: "5px 10px" }}>
-          Apply Filter
-        </button>
+        <input class="btn btn-primary" type="submit" value="Apply Filter" onClick={handleDateFilter} style={{ padding: "5px 10px" }} />
 
-        <button
-          onClick={handleReset} // Reset to original data
+
+
+        <input class="btn btn-primary" type="reset" value="Reset" onClick={handleReset} // Reset to original data
           style={{ marginLeft: "10px", padding: "5px 10px" }}
-        >
-          Reset Filter
-        </button>
+        ></input>
+
       </div>
       <Grid2 minHeight={"600px"}>
         <span class="container-eg-btn-3" style={{ justifyContent: "space-around" }}>
