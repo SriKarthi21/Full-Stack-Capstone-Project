@@ -21,7 +21,7 @@ const Image = styled.img`
 
 function Header({imageSrc}) {
   const navigate = useNavigate();
-  
+
   const[hide,setHide]=useState(false);
   const {isLoggedIn,logout}=useContext(AuthContext);
   const handleLogout = () => {
@@ -34,7 +34,7 @@ function Header({imageSrc}) {
       }
     });
     logout();
-   
+
   }
   const logoutButton=()=>{
     setHide(!hide);
@@ -77,9 +77,18 @@ justify-Content:space-between;
 
   return (
     <Header>
+              <div style={{margin:"20px"}}>
+              <Link  to="/">
+            <Button variant="contained" color="success">Home</Button>
+         </Link>
+         <Link style={{ margin: "20px"}} to="/contactUs">
+            <Button variant="contained" color="success">Contact Us</Button>
+         </Link>
+         </div>
       <HeaderContainer>
         <img src="logo1.png" alt='Logo' className="logo" />
       </HeaderContainer>
+      
 
       <Nav onMouseEnter={()=>setHide(true)} onMouseLeave={()=>setHide(false)}>
       <Grid2  >
@@ -116,16 +125,16 @@ justify-Content:space-between;
             <Link to="/signUp">
         <Button style={{ marginLeft: "20px" }} variant="contained" color="success" >Sign Up</Button>
 
-            </Link>
+              </Link>
             </span>
-          ) }
+          )} 
 
         </Grid2>
-      
 
-      
-            
-        
+
+
+
+
       </Nav>
 
     </Header>
