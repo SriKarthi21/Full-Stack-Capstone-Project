@@ -78,9 +78,7 @@ justify-Content:space-between;
   return (
     <Header>
               <div style={{margin:"20px"}}>
-              <Link  to="/">
-            <Button variant="contained" color="success">Home</Button>
-         </Link>
+             
          <Link style={{ margin: "20px"}} to="/contactUs">
             <Button variant="contained" color="success">Contact Us</Button>
          </Link>
@@ -101,7 +99,7 @@ justify-Content:space-between;
            
               <img style={{height:"50px",marginLeft:"10px"}}  src={imageSrc} alt="User Image"/>
               {hide && <Link to="/">
-               <Button style={{ marginLeft: "20px",  top:"10%", right:"1%" }} variant="contained" color="success"onClick={handleLogout}> Logout</Button>
+               <Button style={{ position:"absolute" , top:"11vh", right:"1%" }} variant="contained" color="success"onClick={handleLogout}> Logout</Button>
              </Link>
              }
                 </div>        
