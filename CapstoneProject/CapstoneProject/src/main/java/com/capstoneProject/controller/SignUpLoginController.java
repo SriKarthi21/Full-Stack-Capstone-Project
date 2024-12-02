@@ -57,6 +57,8 @@ public class SignUpLoginController {
 			String token=map.get("token");
 			System.out.println("Token is:"+token);
 			responseEntity = new ResponseEntity(securityTokenGenerator.generateToken(user), HttpStatus.OK);
+		}else{
+			responseEntity=new ResponseEntity(HttpStatus.UNAUTHORIZED);
 		}
 		return responseEntity;
 	}
