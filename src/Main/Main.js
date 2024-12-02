@@ -39,6 +39,21 @@ const Main = ({ prop }) => {
   const [endDate, setEndDate] = useState("");
   const [priority, setPriority] = useState("");
 
+
+  
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await axios.get(`http://localhost:8085/api/v1/task/email/${mail}`,
+        { headers: { Authorization: `Bearer ${token}` } });
+      setData(response.data);
+      setPriorityFilter(response.data);
+    };
+    if (mail) { // Fetch data only if mail is not null (loading state)
+      fetchData();
+    }
+  }, [mail,prop]);
+
+  
   const handleFilter = (value) => {
     let filtered;
     console.log(value);
@@ -74,22 +89,7 @@ const Main = ({ prop }) => {
     setPriorityFilter(data); // Reset to original data
   };
   const navigate = useNavigate();
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await axios.get(`http://localhost:8085/api/v1/task/email/${mail}`,
-        { headers: { Authorization: `Bearer ${token}` } });
-      setData(response.data);
-      setPriorityFilter(response.data);
-    };
-    if (mail) { // Fetch data only if mail is not null (loading state)
-      fetchData();
-    }
-  }, [mail]);
-
-  useEffect(() => {
-    setMail(prop);
-  }, [prop]);
-
+  
   // console.log("add task",data)
   const handleAddTask = async (addTask) => {
     addTask.emailID = mail
@@ -99,7 +99,7 @@ const Main = ({ prop }) => {
         headers: { Authorization: `Bearer ${token}` }
       })
       console.log("Task added" + response.data)
-      setData([...data, response.data]);
+      setPriorityFilter([...data, response.data]);
       enqueueSnackbar("Task added successfully!", {
         variant: "success",
         autoHideDuration: 2000,
@@ -126,7 +126,7 @@ const Main = ({ prop }) => {
 
       let newArray = data.map((task) => (task.taskId === updatedData.taskId ? updatedData : task))
       console.log("New Array", newArray);
-      setData(newArray)
+      setPriorityFilter(newArray)
       console.log(data)
       enqueueSnackbar("Task updated successfully!", {
         variant: "success",
@@ -153,7 +153,7 @@ const Main = ({ prop }) => {
       const response = await axios.post(`http://localhost:8085/api/v1/task/softDelete/${taskId}`, {
       }, { headers: { Authorization: `Bearer ${token}` } })
       console.log("soft deleted", response)
-      setData(data.filter((task) => task.taskId !== taskId));
+      setPriorityFilter(data.filter((task) => task.taskId !== taskId));
       console.log(data)
       enqueueSnackbar("Task moved to Bin!", {
         variant: "success",
