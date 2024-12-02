@@ -70,7 +70,10 @@ function Header({imageSrc}) {
   return (
     <Headerdiv>
               <div style={{margin:"20px"}}>
-             
+            {!isLoggedIn ?(<Link style={{ marginLeft: "20px" }} to="/">
+          <Button variant="contained" color="primary">Home</Button>
+               </Link>
+             ):(<p></p>)}
          <Link  to="/contactUs">
             <Button variant="contained" color="primary">Contact Us</Button>
          </Link>
@@ -108,9 +111,7 @@ function Header({imageSrc}) {
                 </div>
           ):(
             <span>
-              <Link style={{ marginLeft: "20px" }} to="/">
-          <Button variant="contained" color="primary">Home</Button>
-               </Link>
+              
       
             <Link to="/login">
               <Button style={{ marginLeft: "20px" }} variant="contained" color="primary"> Login</Button>
