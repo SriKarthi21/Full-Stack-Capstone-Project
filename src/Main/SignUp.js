@@ -2,7 +2,9 @@ import styled from "styled-components";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useSnackbar } from "notistack";
-import { Grid2 } from "@mui/material";
+import { Grid, Grid2 } from "@mui/material";
+import { RiEyeCloseFill } from "react-icons/ri";
+
 const Title = styled.h3`
 color:gray;
 font-family: 'Times New Roman';
@@ -12,18 +14,19 @@ font-size: x-large;
 const Container = styled.div`
   background-color: #dedeff;
     
-  padding: 30px;
-  width: 500px;
-  margin: 30px auto;
-  
+  padding: 2%;
+    width:30%;
   box-shadow: 2px 2px 5px gray;
  
 `;
 
+const Form=styled.form`
+height:80%;
+width:100%;
+`;
 const ButtonContainer = styled.div`
-display:flex;
-gap:10px;
-align-items:center;
+ display:flex;
+gap:20px;
 `;
 
 const Button = styled.button`
@@ -35,6 +38,7 @@ const Button = styled.button`
   cursor: pointer;
   align-self: start;
   font-size: 1em;
+  width:10vw;
   &:hover {
     background-color: midnightblue;
   }
@@ -47,15 +51,24 @@ outline: none;
 border-bottom: 2px solid blue;
 border-radius: 3px;
 width: 90%;
-margin-bottom: 5px;
+
 &:focus {
   outline: 1px solid blue;
 }
 `;
 const Error=styled.span`
-    color:red;
-    font-family: 'Times New Roman';
-    `;
+  color:red;
+  font-family: 'Times New Roman';
+  position:absolute;
+  display:block;
+  text-align:center;
+  `;
+  const Img=styled.img`
+  height:70vh;
+  box-shadow: 2px 2px 5px gray;
+width:60%;
+  `;
+  
 function SignUp() {
 
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
@@ -70,7 +83,7 @@ function SignUp() {
         saveUser(formData);
        
         console.log(formData);
-        // reset();
+        reset();
     }
 
     
@@ -78,33 +91,61 @@ function SignUp() {
     async function saveUser(data) {
         try {
             console.log(data);
-            const backEndUrl="http://localhost:8083/api/v1/register";
-            const response=await axios.post(backEndUrl,data);
+            const regesterUrl="http://localhost:8083/api/v1/register";
+            const response=await axios.post(regesterUrl,data);
             console.log(response);
             
             // alert(`User  ${data.userName} registered successfully`)
             if(response.status===201){
                 enqueueSnackbar("Registeration successfully!", {
                 variant: "success",
-                autoHideDuration: 2000, // 2 seconds
+                autoHideDuration: 2000, 
                     anchorOrigin: {
                     vertical: "top",
-                    horizontal: "right",
+                    horizontal: "center",
                     },
                 });
             }
         console.log('done');
         } catch (error) {
-            console.log("error",error)
+            console.log("error",error,error.status);
+            if(error.status=409){
+                enqueueSnackbar("Email already regestered!", {
+                    variant: "info",
+                    autoHideDuration: 2000,
+                        anchorOrigin: {
+                        vertical: "top",
+                        horizontal: "center",
+                        },
+                    });
+                }else{
+            enqueueSnackbar(`Server Error! ${error.status}`, {
+                variant: "info",
+                autoHideDuration: 2000, 
+                    anchorOrigin: {
+                    vertical: "top",
+                    horizontal: "center",
+                    },
+                });
+            }
         }
     }
 
     return (
-        <Grid2 display={'flex'} justifyContent={'center'} paddingLeft={5}
-    // bgcolor={'rgb(26, 118, 173)'} 
-    container alignContent={'center'} minHeight={600}>       <Container>
+        <Grid2   display={'flex'} justifyContent={'center'} 
+        padding={1} 
+       bgcolor={'rgb(229 235 238)'}  container alignContent={'center'} minHeight={600}>
+           {/* <Grid2 maxWidth={300}m={1}> */}
+           <Img  src="Types-of-To-Do-Lists.png" alt="login image"/>
+
+            {/* </Grid2>        */}
+
+    
+     <Container>
             <Title>Registration Form</Title>
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <Form onSubmit={handleSubmit(onSubmit)}>
+            <Grid2 mb={3}>
+
             <Input type="text"
                     id="userName"
                     placeholder="Enter UserName" {...register(
@@ -127,8 +168,9 @@ function SignUp() {
                 {errors.userName && (
                     <Error>{errors.userName.message}</Error>
                 )}
-
-                <Input type="text"
+</Grid2>
+<Grid2 mb={3}>
+<               Input type="text"
                     id="userEmailID"
                     placeholder="Enter EmailID" {...register(
                         "userEmailID", {
@@ -143,9 +185,11 @@ function SignUp() {
                     }
                     )} />
                 {errors.userEmailID && (
-                    <Error>{errors.useruserEmailID.message}</Error>
+                    <Error>{errors.userEmailID.message}</Error>
                 )}
 
+</Grid2>
+<Grid2 mb={3}>
                 <Input type="password"
                     id="userPassword"
                     placeholder="Enter Password" {...register(
@@ -162,12 +206,22 @@ function SignUp() {
                     )} />
                 {errors.userPassword && (
                     <Error>{errors.userPassword.message}</Error>
-                )}
-              <Input
-        {...register("image")}
-        type="file" 
-        accept="image/*"
-      />
+                )}</Grid2>                
+<Grid2 mb={3}>
+<label id="file-input-label" for="file-input"
+      >Upload Profile Image</label>
+
+        
+    <input   id="file-input" name="file-input"
+                        {...register("image",{
+                            required:{value:true}
+                        })}
+                        type="file" 
+                        accept="image/*"
+                    />
+               
+</Grid2>
+             
                 <ButtonContainer>
                     <Button type="submit">Submit</Button>
                     <Button type="reset" onClick={() => reset()}>
@@ -176,7 +230,7 @@ function SignUp() {
                     </Button>
 
                 </ButtonContainer>
-            </form>
+            </Form>
         </Container>
         </Grid2>
  

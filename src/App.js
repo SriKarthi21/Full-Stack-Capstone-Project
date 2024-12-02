@@ -45,8 +45,18 @@ async function handleLogin(data){
         const imageUrl = URL.createObjectURL(imageBlob);
         console.log(imageUrl);
         setImageSrc(imageUrl);
+        enqueueSnackbar("Login successfully!", {
+          variant: "success",
+          autoHideDuration: 2000, 
+          anchorOrigin: {
+            vertical: "top",
+            horizontal: "center", }
+         } )
        
-    }else if(loginResponse.status===401){
+    }
+  }catch(e){
+    console.log(e)
+    if(e.status===401){
       localStorage.setItem('token',null)
 
       enqueueSnackbar("Create an account for Login!", {
@@ -57,7 +67,7 @@ async function handleLogin(data){
           horizontal: "center", }
        } )
     } else {
-      console.error("Login failed with status:", loginResponse.status);
+      console.error("Login failed with status:", e.status);
       enqueueSnackbar("Login failed. Please try again later.", {
         variant: "error",
         autoHideDuration: 2000,
@@ -67,8 +77,6 @@ async function handleLogin(data){
         },
       });
     }
-  }catch(e){
-    console.log(e)
   }
 }
 
@@ -83,7 +91,7 @@ async function handleLogin(data){
  <Route path="/contactUs" element={<ContactUs/>}/> 
   <Route path="/login" element={<Login onLogin={handleLogin} />}/>
  <Route path='/signUp' element={<SignUp/>}/> 
- {isLoggedIn && (<Route path="/user" element={<Main prop={mail}  />}/>)}
+ {isLoggedIn && (<Route path="/dashboard" element={<Main prop={mail}  />}/>)}
   {isLoggedIn && (<Route path="/bin" element={<Bin prop={mail} />}/>)}
   
   <Route path="*" element={<PageNotFound/>}  />

@@ -173,46 +173,51 @@ const Main = ({ prop }) => {
   return (
     <>
 
-      <div style={{ display: "flex", justifyContent: "center", gap: "10px", margin: "20px 0" }}>
+      
+      <Grid2 minHeight={"600px"}>
+        <span class="container-eg-btn-3" style={{ justifyContent: "space-around" }}>
+          <Addtask onAddTask={handleAddTask} />
+
+          <span class="container-eg-btn-3" style={{ display: "flex", justifyContent: "center", gap: "10px", margin: "20px 0" }}>
         <Form.Select
           aria-label="Filter by Priority"
-          // onChange={(e) => setPriorityFilter(e.target.value)}
           onChange={(e) => handleFilter(e.target.value)}
           value={priority}
-          style={{ width: '200px' }}
-          className="mb-3"
+          style={{ width: '180px' }}
         >
-          <option value="">All Priorities</option>
+          <option value="">All </option>
           <option value="High">High</option>
           <option value="Medium">Medium</option>
           <option value="Low">Low</option>
         </Form.Select>
-        <input
+        <label>Start Date :
+        <input className="filterDate "
           type="date"
           value={startDate}
           onChange={(e) => setStartDate(e.target.value)}
           style={{ padding: "5px" }}
         />
-        <input
+        </label >
+        <label>
+
+        End Date :
+        <input className="filterDate"
           type="date"
           value={endDate}
           onChange={(e) => setEndDate(e.target.value)}
           style={{ padding: "5px" }}
         />
-        <input class="btn btn-primary" type="submit" value="Apply Filter" onClick={handleDateFilter} style={{ padding: "5px 10px" }} />
+       
 
-
-
-        <input class="btn btn-primary" type="reset" value="Reset" onClick={handleReset} // Reset to original data
+        </label>
+        <input className="button button-1" type="submit" value="Apply Filter" onClick={handleDateFilter} style={{ padding: "5px 10px" }} />
+        <input className="button2 button-2" type="reset" value="Reset" onClick={handleReset} 
           style={{ marginLeft: "10px", padding: "5px 10px" }}
         ></input>
 
-      </div>
-      <Grid2 minHeight={"600px"}>
-        <span class="container-eg-btn-3" style={{ justifyContent: "space-around" }}>
-          <Addtask onAddTask={handleAddTask} />
+      </span>
 
-          <Link to="/bin" class="button button-1" > <RecyclingIcon />Recycle Bin</Link>
+          <Link to="/bin" className="button button-1" > <RecyclingIcon />Recycle Bin</Link>
 
         </span>
 

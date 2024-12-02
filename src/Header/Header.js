@@ -2,20 +2,47 @@ import React, { useContext } from 'react'
 import { Link } from 'react-router-dom';
 import styled from "styled-components";
 import { useNavigate } from 'react-router-dom';
-import Nav from 'react-bootstrap/Nav';
 import { Button, Container, FormControl, Grid2, Input, TextField, Typography } from '@mui/material'
 import AuthContext from '../AuthContext/AuthContext';
 import { enqueueSnackbar } from 'notistack'
 import { useState } from 'react';
 
 
-const Image = styled.img`
-  height:100px;
+const HeaderLogo = styled.div`
   width:100px;
+height:90px;
   float:left;
-  margin-right:10px;
-  padding-bottom:50%;
+  margin-top:12px;
+  margin-bottom:0px;
+  display:flex;
+  color:yellow;
   `;
+  const Headerdiv = styled.div`
+  background-color: #190882;
+  color: rgb(10, 65, 168);
+  display: flex;
+  justify-content: space-between;
+  align-items:center;
+
+`;
+ const Image = styled.img`
+  width:80%;
+  height:80%
+  `;
+
+  const CompanyName = styled.h3`
+  text-shadow: #ef0a0a;
+  // font-weight: 400;
+  font-style: italic;
+  color:lightgreen;
+
+  
+`;
+  const Nav = styled.nav`
+backgrounColor:blue;
+padding:20px;
+justify-Content:space-between;
+`;
 
 
 
@@ -34,58 +61,26 @@ function Header({imageSrc}) {
       }
     });
     logout();
+    localStorage.setItem('token',null);
 
   }
-  const logoutButton=()=>{
-    setHide(!hide);
-  }
 
-  const Container = styled.div`
-  display:flex;
-    width: 90%;
-    max-width: 1200px;
-    margin-left: auto;
-    margin-right: auto;
-  `
-
-  const Header = styled.div`
-  background-color: #0b61de;
-  color: rgb(10, 65, 168);
-  display: flex;
-  justify-content: space-between;
-
-`
-  const HeaderContainer = styled.div`
-  padding-right: 10px;
-  margin:5px 20px;
- 
-`
-
-  const CompanyName = styled.h1`
-  text-shadow: #ef0a0a;font-family: "Bungee Spice", sans-serif;
-  font-weight: 400;
-  font-style: normal;
-  font-size: 50px;
-  color:blue;
-`
-  const Nav = styled.nav`
-backgrounColor:blue;
-padding:20px;
-justify-Content:space-between;
-`
 
 
   return (
-    <Header>
+    <Headerdiv>
               <div style={{margin:"20px"}}>
              
-         <Link style={{ margin: "20px"}} to="/contactUs">
-            <Button variant="contained" color="success">Contact Us</Button>
+         <Link  to="/contactUs">
+            <Button variant="contained" color="primary">Contact Us</Button>
          </Link>
          </div>
-      <HeaderContainer>
-        <img src="logo1.png" alt='Logo' className="logo" />
-      </HeaderContainer>
+         <HeaderLogo>
+        <Image src="todo.png" alt='Logo'  />
+      <CompanyName>
+      𝕋𝕠 𝔻𝕠 𝕋𝕣𝕒𝕔𝕜𝕖𝕣
+      </CompanyName>
+         </HeaderLogo>
       
 
       <Nav onMouseEnter={()=>setHide(true)} onMouseLeave={()=>setHide(false)}>
@@ -97,9 +92,9 @@ justify-Content:space-between;
                 
                <div style={{marginLeft:"20px"}}  >
            
-              <img style={{height:"50px",marginLeft:"10px"}}  src={imageSrc} alt="User Image"/>
+              <img style={{width:"60px"}}   src={imageSrc} alt="User Image"/>
               {hide && <Link to="/">
-               <Button style={{ position:"absolute" , top:"11vh", right:"1%" }} variant="contained" color="success"onClick={handleLogout}> Logout</Button>
+               <Button style={{ position:"absolute" , top:"12vh", right:"1%" }} variant="contained" color="secondary"onClick={handleLogout}> Logout</Button>
              </Link>
              }
                 </div>        
@@ -114,14 +109,14 @@ justify-Content:space-between;
           ):(
             <span>
               <Link style={{ marginLeft: "20px" }} to="/">
-          <Button variant="contained" color="success">Home</Button>
+          <Button variant="contained" color="primary">Home</Button>
                </Link>
       
             <Link to="/login">
-              <Button style={{ marginLeft: "20px" }} variant="contained" color="success"> Login</Button>
+              <Button style={{ marginLeft: "20px" }} variant="contained" color="primary"> Login</Button>
             </Link>
             <Link to="/signUp">
-        <Button style={{ marginLeft: "20px" }} variant="contained" color="success" >Sign Up</Button>
+        <Button style={{ marginLeft: "20px" }} variant="contained" color="primary" >Sign Up</Button>
 
               </Link>
             </span>
@@ -135,7 +130,7 @@ justify-Content:space-between;
 
       </Nav>
 
-    </Header>
+    </Headerdiv>
 
 
   );

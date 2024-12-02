@@ -16,20 +16,26 @@ const Title=styled.h3`
   `;
   
   const Container = styled.div`
-    background-color: #dedeff;
-      
-    padding: 30px;
-    width: 500px;
-    margin: 30px auto;
-    
+   background-color: #e7e7ff;
     box-shadow: 2px 2px 5px gray;
-   
+    display: flex;
+    width:30%;
+    flex-direction: column;
+    justify-content: center;
+    align-items:center;
   `;
   
+  const Form=styled.form`
+  height:80%;
+  width:100%;
+  text-align:center;
+  `;
   const ButtonContainer=styled.div`
   display:flex;
-  gap:10px;
-  align-items:center
+  justify-content:space-around;
+  margin-top:15%;  
+
+
   `;
   
   const Button = styled.button`
@@ -39,7 +45,7 @@ const Title=styled.h3`
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    align-self: start;
+  width:10vw;
     font-size: 1em;
     &:hover {
       background-color: midnightblue;
@@ -53,16 +59,28 @@ const Title=styled.h3`
   border-bottom: 2px solid blue;
   border-radius: 3px;
   width: 90%;
-  margin-bottom: 5px;
-  &:focus {
-    outline: 1px solid blue;
-  }
+
+  outline: 1px solid blue;
+  `;
+  const Img=styled.img`
+  height:70vh;
+  width:60%;
+  box-shadow: 2px 2px 5px gray;
+
+  `;
+  const Error=styled.span`
+  color:red;
+  font-family: 'Times New Roman';
+  position:absolute;
+  display:block;
+  margin-left:2%;
+  text-align:center;
   `;
   
 export default function Login({onLogin}){
   const { enqueueSnackbar } = useSnackbar(); 
   const {isLoggedIn,logout}=useContext(AuthContext);
-  const token=localStorage.getItem('token')
+  let token=localStorage.getItem('token')
   const {register, handleSubmit,reset,formState:{errors}}=useForm();  
   const navigate = useNavigate();
 
@@ -71,26 +89,19 @@ export default function Login({onLogin}){
         onLogin(data);
         
         console.log(isLoggedIn);
-            let token = localStorage.getItem('token')
 
           // setTimeout(()=>{
           //  console.log(isLoggedIn);
-           console.log("login token",token)
+          //  console.log("login token",token)
            if( token){
-            enqueueSnackbar("Login successfully!", {
-              variant: "success",
-              autoHideDuration: 2000, 
-              anchorOrigin: {
-                vertical: "top",
-                horizontal: "center", }
-             } )
-             navigate("/user");
+           
+             navigate("/dashboard");
             }
          
             // },200)
           }catch(e){
         console.log(e);
-        enqueueSnackbar("Unable to login! User details are not valid ", {
+        enqueueSnackbar(`Unable to login! User details are not valid ${e.status}`, {
           variant: "info",
           autoHideDuration: 2000, 
           anchorOrigin: {
@@ -104,22 +115,20 @@ export default function Login({onLogin}){
       reset();
   }
   
-  const Error=styled.span`
-  color:red;
-  font-family: 'Times New Roman';
-  `;
   
 
 
   return (
-    <Grid2 display={'flex'} justifyContent={'center'} paddingLeft={5}
-    // bgcolor={'rgb(26, 118, 173)'} 
-    container alignContent={'center'} minHeight={600}>
+    <Grid2
+     display={'flex'} justifyContent={'center'} 
+     padding={1} 
+    bgcolor={'rgb(229 235 238)'}  container alignContent={'center'} minHeight={600}>
+        <Img  src="Types-of-To-Do-Lists.png" alt="login image"/>
 <Container>
 <Title>Login Form</Title>
-<form onSubmit={handleSubmit(onSubmit)}>
-    
- <Input type="text"
+<Form onSubmit={handleSubmit(onSubmit)} >
+    <Grid2 mb={5}>
+    <Input type="text"
     id="userEmailID"
     placeholder="Enter Email-ID" {...register(
         "userEmailID",{
@@ -134,10 +143,12 @@ export default function Login({onLogin}){
         }
     )}/>
     { errors.email &&(
-        <Error>{errors.email.message}</Error>
+        <Error>{errors.userEmailID.message}</Error>
     )}
 
-<Input type="password"
+    </Grid2 >
+ <Grid2 mb={5}>
+ <Input type="password"
     id="userPassword"
     placeholder="Enter Password" {...register(
         "userPassword",{
@@ -149,6 +160,8 @@ export default function Login({onLogin}){
        { errors.userPassword &&(
         <Error>{errors.userPassword.message}</Error>
     )}
+
+ </Grid2>
 <ButtonContainer>
 <Button type="submit">Submit</Button>
 <Button type="reset" onClick={()=> reset()}>
@@ -157,7 +170,7 @@ export default function Login({onLogin}){
 </Button>
 
 </ButtonContainer>
-    </form>
+    </Form>
 </Container>
    
     </Grid2>

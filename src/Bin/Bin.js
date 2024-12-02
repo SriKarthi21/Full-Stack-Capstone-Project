@@ -6,17 +6,13 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { Grid2 } from '@mui/material';
-import Main from '../Main/Main'
 import { useSnackbar } from "notistack";
 import { useNavigate } from 'react-router-dom';
-import Button from 'react-bootstrap/Button';
 import { Card, Box ,IconButton} from '@mui/material';
 import RestoreIcon from '@mui/icons-material/Restore';
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Link } from 'react-router-dom';
-import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
-import DeleteOutlineTwoToneIcon from '@mui/icons-material/DeleteOutlineTwoTone';
-
+import GridViewIcon from '@mui/icons-material/GridView';
 const Bin = ({prop}) => {
     const [emailID, setEmailID] = useState(prop)
     const [tasks, setTasks] = useState([]);
@@ -79,7 +75,7 @@ const Bin = ({prop}) => {
     return (
         <Grid2 minHeight={600} >
           <span class="container-eg-btn-3" >
-          <Link to="/user"class="button button-1" >Dashboard</Link>
+          <Link to="/dashboard"class="button button-1" > <GridViewIcon/>Dashboard</Link>
 
           </span>
           <Box sx={{ width: '100%'}} >
