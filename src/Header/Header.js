@@ -65,68 +65,67 @@ function Header({imageSrc}) {
 
   return (
     <Headerdiv>
-              <div style={{margin:"20px"}}>
-            {!isLoggedIn ?(<Link style={{ marginLeft: "20px" }} to="/">
-          <Button variant="contained" color="primary">Home</Button>
-        </Link>
-        ) : (<p></p>)}
-        <Link to="/contactUs">
-          <Button variant="contained" color="primary">Contact Us</Button>
-        </Link>
-      </div>
-      <HeaderLogo>
-        <Image src="todo.png" alt='Logo' />
-        <CompanyName>
-          <h3>      𝕋𝕠 𝔻𝕠 𝕋𝕣𝕒𝕔𝕜𝕖𝕣        </h3>
+        <div style={{margin:"5px",marginLeft:"30px",alignItems:"center",
+          display:"flex",justifyContent:"space-between"}}>
 
-        </CompanyName>
-      </HeaderLogo>
-      <div style={{ marginLeft: "50px", alignItems: "center" }}>
-        {!isLoggedIn ? (<Link to="/">
+       <HeaderLogo>
+        <Image src="todo.png" alt='Logo'  />
+      <CompanyName>
+        <h3>      𝕋𝕠 𝔻𝕠 𝕋𝕣𝕒𝕔𝕜𝕖𝕣        </h3>
+      
+      </CompanyName>
+         </HeaderLogo>
+         <div style={{ marginLeft: "50px" ,alignItems:"center"}}>
+         {!isLoggedIn ?(<Link  to="/">
           <Button variant="contained" color="primary">Home</Button>
-        </Link>
-        ) : (<Link to="/dashboard">
-          <Button variant="contained" color="primary">Home</Button>
-        </Link>)}
-        <Link style={{ marginLeft: "20px" }} to="/contactUs">
-          <Button variant="contained" color="primary">Contact Us</Button>
-        </Link>
-      </div>
+               </Link>
+             ):(<Link  to="/dashboard">
+              <Button variant="contained" color="primary">Home</Button>
+                   </Link>)}
+         <Link style={{marginLeft:"20px"}} to="/contactUs">
+            <Button  variant="contained" color="primary">Contact Us</Button>
+         </Link>
+         </div>
+            
+         </div>
+        
 
-    </div><Nav onMouseEnter={() => setHide(true)} onMouseLeave={() => setHide(false)}>
-        <Grid2>
+      <Nav onMouseEnter={()=>setHide(true)} onMouseLeave={()=>setHide(false)}>
+      <Grid2  >
           {isLoggedIn ? (
-            <div style={{ marginLeft: "20px", display: "flex" }}>
-
+           <div style={{marginLeft:"20px",display:"flex"}} >
+          
               {imageSrc ? (
+                
+               <div style={{marginLeft:"20px"}}  >
+           
+              <img style={{width:"60px",height:"50px"}}   src={imageSrc} alt="User Image"/>
+              {hide && <Link to="/">
+               <Button style={{ position:"absolute" , top:"10vh", right:"1%" }} variant="contained" color="secondary"onClick={handleLogout}> Logout</Button>
+             </Link>
+             }
+                </div>        
+                 ) : (
+                  <p>
 
-                <div style={{ marginLeft: "20px" }}>
-
-                  <img style={{ width: "60px", height: "50px" }} src={imageSrc} alt="User Image" />
-                  {hide && <Link to="/">
-                    <Button style={{ position: "absolute", top: "10vh", right: "1%" }} variant="contained" color="secondary" onClick={handleLogout}> Logout</Button>
-                  </Link>}
+                  </p>
+                 )
+                }
+                
                 </div>
-              ) : (
-                <p>
-
-                </p>
-              )}
-
-            </div>
-          ) : (
+          ):(
             <span>
-
-
-              <Link to="/login">
-                <Button style={{ marginLeft: "20px" }} variant="contained" color="primary"> Login</Button>
-              </Link>
-              <Link to="/signUp">
-                <Button style={{ marginLeft: "20px" }} variant="contained" color="primary">Sign Up</Button>
+              
+      
+            <Link to="/login">
+              <Button style={{ marginLeft: "20px" }} variant="contained" color="primary"> Login</Button>
+            </Link>
+            <Link to="/signUp">
+        <Button style={{ marginLeft: "20px" }} variant="contained" color="primary" >Sign Up</Button>
 
               </Link>
             </span>
-          )}
+          )} 
 
         </Grid2>
 
@@ -134,10 +133,9 @@ function Header({imageSrc}) {
 
 
 
-      </Nav></>
+      </Nav>
 
     </Headerdiv>
-
 
   );
 
