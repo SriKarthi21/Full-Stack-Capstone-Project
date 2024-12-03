@@ -9,6 +9,7 @@ const Container = styled.div`
   margin: 0 auto;
   padding: 20px;
   text-align: center;
+  min-height:600px;
 `;
 
 const Title = styled.h1`

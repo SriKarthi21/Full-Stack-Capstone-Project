@@ -121,7 +121,7 @@ const Addtask = ({  onAddTask }) => {
             </Button>
             {/* <Button variant="secondary" onClick={handleClose}>Close</Button> */}
             <Button variant="primary" type='submit' onClick={handleSubmit(onSubmit)} disabled={!isValid}>
-              Save Changes
+              Add
             </Button>
           </Modal.Footer>
         </Modal>

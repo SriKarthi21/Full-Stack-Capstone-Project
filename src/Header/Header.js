@@ -9,13 +9,10 @@ import { useState } from 'react';
 
 
 const HeaderLogo = styled.div`
-  width:100px;
-height:90px;
-  float:left;
-  margin-top:12px;
-  margin-bottom:0px;
+  width:10vw;    
+  height: 10vh;
   display:flex;
-  color:yellow;
+align-items:center;
   `;
   const Headerdiv = styled.div`
   background-color: #190882;
@@ -26,13 +23,12 @@ height:90px;
 
 `;
  const Image = styled.img`
-  width:80%;
-  height:80%
+  width:90%;
+  height:70%
   `;
 
-  const CompanyName = styled.h3`
+  const CompanyName = styled.div`
   text-shadow: #ef0a0a;
-  // font-weight: 400;
   font-style: italic;
   color:lightgreen;
 
@@ -69,22 +65,30 @@ function Header({imageSrc}) {
 
   return (
     <Headerdiv>
-              <div style={{margin:"20px"}}>
-            {!isLoggedIn ?(<Link style={{ marginLeft: "20px" }} to="/">
-          <Button variant="contained" color="primary">Home</Button>
-               </Link>
-             ):(<p></p>)}
-         <Link  to="/contactUs">
-            <Button variant="contained" color="primary">Contact Us</Button>
-         </Link>
-         </div>
-         <HeaderLogo>
+        <div style={{margin:"5px",marginLeft:"30px",alignItems:"center",
+          display:"flex",justifyContent:"space-between"}}>
+
+       <HeaderLogo>
         <Image src="todo.png" alt='Logo'  />
       <CompanyName>
-      𝕋𝕠 𝔻𝕠 𝕋𝕣𝕒𝕔𝕜𝕖𝕣
+        <h3>      𝕋𝕠 𝔻𝕠 𝕋𝕣𝕒𝕔𝕜𝕖𝕣        </h3>
+      
       </CompanyName>
          </HeaderLogo>
-      
+         <div style={{ marginLeft: "50px" ,alignItems:"center"}}>
+         {!isLoggedIn ?(<Link  to="/">
+          <Button variant="contained" color="primary">Home</Button>
+               </Link>
+             ):(<Link  to="/dashboard">
+              <Button variant="contained" color="primary">Home</Button>
+                   </Link>)}
+         <Link style={{marginLeft:"20px"}} to="/contactUs">
+            <Button  variant="contained" color="primary">Contact Us</Button>
+         </Link>
+         </div>
+            
+         </div>
+        
 
       <Nav onMouseEnter={()=>setHide(true)} onMouseLeave={()=>setHide(false)}>
       <Grid2  >
@@ -95,9 +99,9 @@ function Header({imageSrc}) {
                 
                <div style={{marginLeft:"20px"}}  >
            
-              <img style={{width:"60px"}}   src={imageSrc} alt="User Image"/>
+              <img style={{width:"60px",height:"50px"}}   src={imageSrc} alt="User Image"/>
               {hide && <Link to="/">
-               <Button style={{ position:"absolute" , top:"12vh", right:"1%" }} variant="contained" color="secondary"onClick={handleLogout}> Logout</Button>
+               <Button style={{ position:"absolute" , top:"10vh", right:"1%" }} variant="contained" color="secondary"onClick={handleLogout}> Logout</Button>
              </Link>
              }
                 </div>        

@@ -136,7 +136,8 @@ function SignUp() {
         padding={1} 
        bgcolor={'rgb(229 235 238)'}  container alignContent={'center'} minHeight={600}>
            {/* <Grid2 maxWidth={300}m={1}> */}
-           <Img  src="Types-of-To-Do-Lists.png" alt="login image"/>
+           {/* <Img  src="Types-of-To-Do-Lists.png" alt="login image"/> */}
+           <Img  src="signup.png" alt="signup image"/>
 
             {/* </Grid2>        */}
 
@@ -214,11 +215,16 @@ function SignUp() {
         
     <input   id="file-input" name="file-input"
                         {...register("image",{
-                            required:{value:true}
+                            required:{value:true,
+                            message:"Profile photo is required"
+                            }
+                            
                         })}
                         type="file" 
                         accept="image/*"
                     />
+        <Error>{errors.image?.message}</Error>
+
                
 </Grid2>
              

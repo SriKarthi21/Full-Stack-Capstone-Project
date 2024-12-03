@@ -29,10 +29,7 @@ const Main = ({ prop }) => {
   // console.log("token is",token)
   const [mail, setMail] = useState(prop);
   const [data, setData] = useState([]);
-  const [show, setShow] = useState(false);
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
 
   const [priorityFilter, setPriorityFilter] = useState([]);
   const [startDate, setStartDate] = useState("");
@@ -51,7 +48,7 @@ const Main = ({ prop }) => {
     if (mail) { // Fetch data only if mail is not null (loading state)
       fetchData();
     }
-  }, [mail,prop]);
+  }, [mail]);
 
   
   const handleFilter = (value) => {
@@ -64,8 +61,6 @@ const Main = ({ prop }) => {
       setPriorityFilter(filtered)
 
     }
-
-
   };
 
   const handleDateFilter = () => {
@@ -73,13 +68,11 @@ const Main = ({ prop }) => {
     console.log(startDate, endDate);
     let filtered;
     filtered = data.filter(task => {
-
+      
       const taskDate = new Date(task.startDate); // Ensure `startDate` is in your task data
       return taskDate >= new Date(startDate) && taskDate <= new Date(endDate);
 
     });
-
-
     setPriorityFilter(filtered);
 
   }
@@ -88,7 +81,6 @@ const Main = ({ prop }) => {
     setEndDate("");
     setPriorityFilter(data); // Reset to original data
   };
-  const navigate = useNavigate();
   
   // console.log("add task",data)
   const handleAddTask = async (addTask) => {
@@ -99,7 +91,8 @@ const Main = ({ prop }) => {
         headers: { Authorization: `Bearer ${token}` }
       })
       console.log("Task added" + response.data)
-      setPriorityFilter([...data, response.data]);
+      setPriorityFilter([...priorityFilter, response.data]);
+      setData([...priorityFilter, response.data])
       enqueueSnackbar("Task added successfully!", {
         variant: "success",
         autoHideDuration: 2000,
@@ -127,6 +120,7 @@ const Main = ({ prop }) => {
       let newArray = data.map((task) => (task.taskId === updatedData.taskId ? updatedData : task))
       console.log("New Array", newArray);
       setPriorityFilter(newArray)
+      setData(newArray)
       console.log(data)
       enqueueSnackbar("Task updated successfully!", {
         variant: "success",
@@ -154,6 +148,8 @@ const Main = ({ prop }) => {
       }, { headers: { Authorization: `Bearer ${token}` } })
       console.log("soft deleted", response)
       setPriorityFilter(data.filter((task) => task.taskId !== taskId));
+      setData(data.filter((task) => task.taskId !== taskId));
+
       console.log(data)
       enqueueSnackbar("Task moved to Bin!", {
         variant: "success",
@@ -174,7 +170,7 @@ const Main = ({ prop }) => {
     <>
 
       
-      <Grid2 minHeight={"600px"}>
+      <Grid2 minHeight={600}>
         <span class="container-eg-btn-3" style={{ justifyContent: "space-around" }}>
           <Addtask onAddTask={handleAddTask} />
 
@@ -182,7 +178,6 @@ const Main = ({ prop }) => {
         <Form.Select
           aria-label="Filter by Priority"
           onChange={(e) => handleFilter(e.target.value)}
-          value={priority}
           style={{ width: '180px' }}
         >
           <option value="">All </option>
@@ -233,10 +228,6 @@ const Main = ({ prop }) => {
             ) : priorityFilter === null ? (
               <p>Data is Null</p>
             ) :
-              // priorityFilter.length===0 ? ( 
-              //   <p>No Data Found</p>
-              // ) 
-              // :
               (
                 priorityFilter.map((data) => (
                   <Grid2 size={{ xs: 3, sm: 4, md: 3 }}>
@@ -248,23 +239,7 @@ const Main = ({ prop }) => {
 
                 ))
               )}
-            {/* {filterPriority === undefined ? (
-          <p>Invalid Email and Token</p>
-        ) : filterPriority===null? (
-          <p>Data is Null</p>
-        ) : filterPriority.length===0 ? ( 
-          <p>No Data Found</p>
-        ) : (
-          filterPriority.map((data) => (
-            <Grid2  size={{ xs: 3, sm: 4, md: 3 }}>
-              <Task key={data.taskId} data={data}
-                handleUpdate={ handleUpdateTask} 
-                 onDelete={handleBinTask} 
-                />
-          </Grid2>
             
-          ))
-        )} */}
 
           </Grid2>
 

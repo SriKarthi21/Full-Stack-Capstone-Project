@@ -130,7 +130,7 @@ const Task = ({ data, handleUpdate, onDelete }) => {
             <h5 className="card-title" style={{textTransform:"uppercase",borderBottom:"solid"}}> {data?.taskName}</h5>
             {/* <p className="card-text">{data?.emailID}</p> */}
            
-            <p className="card-text">Description : {data?.description}</p> 
+            <p className="card-text font-weight-bold">Description : {data?.description}</p> 
             <div className="date ">
               <span className="date1">
                 Start 
@@ -143,7 +143,7 @@ const Task = ({ data, handleUpdate, onDelete }) => {
 
               </span>
            </div>
-           <p className="card-text">Priority : {data?.priority}</p>
+           <p className="card-text font-weight-bold">Priority : {data?.priority}</p>
 
             <span class="container-eg-btn-3" style={{justifyContent:"space-between"}}>
             <IconButton  className="button button-1"  color="info" onClick={() => handleEditClick(data)} >

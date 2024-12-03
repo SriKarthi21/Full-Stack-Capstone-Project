@@ -74,10 +74,7 @@ const Bin = ({prop}) => {
   };
     return (
         <Grid2 minHeight={600} >
-          <span class="container-eg-btn-3" >
-          <Link to="/dashboard"class="button button-1" > <GridViewIcon/>Dashboard</Link>
-
-          </span>
+          
           <Box sx={{ width: '100%'}} >
             <h3 style={{textAlign:'center'}}>Task will be permanently deleted after 3 days</h3>
             <Grid2  container spacing={{ xs: 2, md: 1 }} 
@@ -98,7 +95,7 @@ const Bin = ({prop}) => {
         <div className="card">
         <div className={`task ${task.priority}  card-body`} style={{padding:"10px",textAlign:"center"}}>
         <h5 className="card-title" style={{textTransform:"uppercase",borderBottom:"solid"}}>{task.taskName}</h5>
-            <p className="card-text">Description : {task.description}</p>
+            <p className="card-text ont-weight-bold" >Description : {task.description}</p>
             <div className="date ">
               <span className="date1">
                 Start 
@@ -111,7 +108,7 @@ const Bin = ({prop}) => {
 
               </span>
            </div>
-           <p className="card-text">Priority : {task?.priority}</p>
+           <p className="card-text ont-weight-bold">Priority : {task?.priority}</p>
             <span class="container-eg-btn-3" style={{justifyContent:"space-between"}}
             >
             <IconButton className="button button-1" color="info" onClick={() => restore(task.taskId)} >

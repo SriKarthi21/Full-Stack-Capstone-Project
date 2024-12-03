@@ -43,7 +43,7 @@ code {
 .container-eg-btn-3 .button2 {
   color: #fff;
   font-size:small;
-  margin: 20px;
+  margin: 0px;
   padding: 12px 15px;
   text-align: center;
   text-transform: uppercase;
@@ -125,6 +125,7 @@ margin: 0 10px;
 }
 .pagenotfound{
 display: flex;
+flex-direction: column;
 justify-content: center;
 align-items: center;
 height: 75vh; 
