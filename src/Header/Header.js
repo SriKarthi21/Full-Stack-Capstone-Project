@@ -70,7 +70,7 @@ function Header({imageSrc}) {
   return (
     <Headerdiv>
               <div style={{margin:"20px"}}>
-            {!isLoggedIn ?(<Link style={{ marginRight: "20px" }} to="/">
+            {!isLoggedIn ?(<Link style={{ marginLeft: "20px" }} to="/">
           <Button variant="contained" color="primary">Home</Button>
                </Link>
              ):(<p></p>)}
