@@ -97,7 +97,7 @@ public class TaskServiceImpl implements ITaskService {
 	}
 	@Scheduled(cron = "0 28 12 * * ?")
 	public void findTaskInBinMoreThanThreeDays() {
-		// TODO Auto-generated method stub
+		
 		List<Task> deletedTaskList = taskRepository.findByIsDeletedTrue();
 		LocalDate local = LocalDate.now();
 		for (Task deletedTask : deletedTaskList) {
