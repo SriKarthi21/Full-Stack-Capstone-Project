@@ -96,7 +96,7 @@ public class TaskServiceImpl implements ITaskService {
 		return Optional.ofNullable(taskRepository.findByTaskId(taskId));
 	}
 	@Scheduled(cron = "0 28 12 * * ?")
-	public void findTaskInBinMoreThanSevenDays() {
+	public void findTaskInBinMoreThanThreeDays() {
 		// TODO Auto-generated method stub
 		List<Task> deletedTaskList = taskRepository.findByIsDeletedTrue();
 		LocalDate local = LocalDate.now();
